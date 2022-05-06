@@ -148,7 +148,7 @@
 1. [2206 - Pizzeria Queries](src/2206%20-%20Pizzeria%20Queries.cpp)
 1. [1190 - Subarray Sum Queries](src/1190%20-%20Subarray%20Sum%20Queries.cpp)
 1. [1734 - Distinct Values Queries](src/1734%20-%20Distinct%20Values%20Queries.cpp)
-1. 2416 - Increasing Array Queries
+1. [2416 - Increasing Array Queries](src/2416%20-%20Increasing%20Array%20Queries.cpp)
 1. [1739 - Forest Queries II](src/1739%20-%20Forest%20Queries%20II.cpp)
 1. [1735 - Range Updates and Sums](src/1735%20-%20Range%20Updates%20and%20Sums.cpp)
 1. [1736 - Polynomial Queries](src/1736%20-%20Polynomial%20Queries.cpp)
