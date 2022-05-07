@@ -256,7 +256,7 @@
 1. [2101 - New Roads Queries](src/2101%20-%20New%20Roads%20Queries.cpp)
 1. 2133 - Dynamic Connectivity
 1. 2121 - Parcel Delivery
-1. 2129 - Task Assignment(src/2129%20-%20Task%20Assignment.cpp)
+1. [2129 - Task Assignment](src/2129%20-%20Task%20Assignment.cpp)
 1. 2130 - Distinct Routes II
 
 ## Additional Problems
@@ -325,8 +325,8 @@
 1. 1148 - Maximum Building II
 1. 2423 - Filling Trominos
 1. [1161 - Stick Divisions](src/1161%20-%20Stick%20Divisions.cpp)
-1. [1665 - Coding Company]
-1. [1699 - Flight Route Requests]
+1. [1665 - Coding Company](src/1665%20-%20Coding%20Company.cpp)
+1. [1699 - Flight Route Requests](src/1699%20-%20Flight%20Route%20Requests.cpp)
 1. 2402 - Two Stacks Sorting
 1. [1701 - Tree Isomorphism II](src/1701%20-%20Tree%20Isomorphism%20II.cpp)
 1. 1705 - Forbidden Cities
