@@ -1,111 +1,55 @@
 /*
 Problem Name: Longest Flight Route
 Problem Link: https://cses.fi/problemset/task/1680
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
-template<typename... T>
-void see(T&... args) { ((cin >> args), ...);}
-template<typename... T>
-void put(T&&... args) { ((cout << args << " "), ...);}
-template<typename... T>
-void putl(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-#define int long long
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 100100
+#define INF 100000000
 #define pb push_back
 #define F first
 #define S second
-#define ll long long
-#define ull unsigned long long
-#define ld long double
-#define pii pair<int,int>
-#define tiii tuple<int,int,int>
-#define vi vector<int>
-#define vii vector<pii>
-#define vc vector
-#define L cout<<'\n';
-#define E cerr<<'\n';
-#define all(x) x.begin(),x.end()
-#define rep(i,a,b) for (int i=a; i<b; ++i)
-#define rev(i,a,b) for (int i=a; i>b; --i)
-#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-#define setpr(x) cout<<setprecision(x)<<fixed
-#define sz size()
-#define seea(a,x,y) for(int i=x;i<y;i++){cin>>a[i];}
-#define seev(v,n) for(int i=0;i<n;i++){int x; cin>>x; v.push_back(x);}
-#define sees(s,n) for(int i=0;i<n;i++){int x; cin>>x; s.insert(x);}
-const ll inf = 1LL<<62;
-const ld ep = 0.0000001;
-const ld pi = acos(-1.0);
-const ll md = 1000000007;
-
-vi adj[100005];
-bool vis[100005];
-vi v;
-void dfs(int s){
-    if (vis[s]) return;
-    vis[s]=1;
-    for (auto i: adj[s]) dfs(i);
-    v.pb(s);
+ 
+using namespace std;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int dp[MAXN], check[MAXN], go[MAXN], n;
+vector<int> v[MAXN];
+ 
+void dfs(int node) {
+    dp[node] = (node == n ? 0 : -1e6);
+    for (int x : v[node]) {
+        if (!check[x]) dfs(x);
+        check[x] = 1;
+        if (dp[x] >= dp[node]) {
+            dp[node] = 1 + dp[x];
+            go[node] = x;
+        }
+    }
 }
-void solve(){
-    int n,m; see(n,m);
-    rep(i,0,m){
-        int a,b; see(a,b);
-        adj[b].pb(a);
+ 
+int main () { _
+    int m;
+    cin >> n >> m;
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        v[a].pb(b);
     }
-    rep(i,1,n+1){
-        if (!vis[i]) dfs(i);
-    }
-    // for (auto i:v) put(i);
-    vi t; int i=0,f=0;
-    while(i<v.sz){
-        if (f==0){
-            if (v[i]==1) {f=1; t.pb(1);}
+    dfs(1);
+    if (dp[1] < 0) cout << "IMPOSSIBLE\n";
+    else {
+        cout << dp[1] + 1 << '\n';
+        cout << "1 ";
+        int atual = go[1];
+        while (atual != 0) {
+            cout << atual << ' ';
+            atual = go[atual];
         }
-        else{
-            t.pb(v[i]);
-        }
-        i++;
+        cout << '\n';
     }
-    int len[100005]={0}, par[100005]={0};
-    len[1]=1, par[1]=0;
-    for (auto i: t) {
-        for (auto j: adj[i]){
-            if (len[i]<len[j]+1 && len[j]){
-                len[i]=len[j]+1;
-                par[i] = j;
-            }
-        }
-    }
-    i = n;
-    vi v;
-    while(i!=0){
-        v.pb(i); i = par[i];
-    }
-    reverse(all(v)); 
-    if (v.sz<2) {put("IMPOSSIBLE"); return;}
-    putl(v.sz);
-    for (auto i: v) put(i);
-}    
-signed main(){
-    IOS;
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    while(t--){
-        solve();
-        //cout<<'\n';
-    }
-    #ifdef LOCAL
-    clock_t tStart = clock();
-    cerr<<fixed<<setprecision(10)<<"\nTime Taken: "<<(double)(clock()- tStart)/CLOCKS_PER_SEC<<endl;
-    #endif
+    return 0;
 }

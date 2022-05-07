@@ -1,114 +1,118 @@
 /*
 Problem Name: School Dance
 Problem Link: https://cses.fi/problemset/task/1696
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
-template<typename... T>
-void see(T&... args) { ((cin >> args), ...);}
-template<typename... T>
-void put(T&&... args) { ((cout << args << " "), ...);}
-template<typename... T>
-void putl(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-#define int long long
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e18
 #define pb push_back
 #define F first
 #define S second
-#define ll long long
-#define ull unsigned long long
-#define ld long double
-#define pii pair<int,int>
-#define tiii tuple<int,int,int>
-#define vi vector<int>
-#define vii vector<pii>
-#define vc vector
-#define L cout<<'\n';
-#define E cerr<<'\n';
-#define all(x) x.begin(),x.end()
-#define rep(i,a,b) for (int i=a; i<b; ++i)
-#define rev(i,a,b) for (int i=a; i>b; --i)
-#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-#define setpr(x) cout<<setprecision(x)<<fixed
-#define sz size()
-#define seea(a,x,y) for(int i=x;i<y;i++){cin>>a[i];}
-#define seev(v,n) for(int i=0;i<n;i++){int x; cin>>x; v.push_back(x);}
-#define sees(s,n) for(int i=0;i<n;i++){int x; cin>>x; s.insert(x);}
-const ll inf = 1LL<<62;
-const ld ep = 0.0000001;
-const ld pi = acos(-1.0);
-const ll md = 1000000007;
-
-vc<tiii> adj[1005];
-bool vis[1005];
-int dfs(int s, int f){
-    if (s==1001) return f;
-    vis[s] = 1;
-    for (auto &[i,w,j]: adj[s]){
-        if (w>=1 && !vis[i]){
-            int b = dfs(i,1);
-            if (b>0){
-                w-=b;
-                get<1>(adj[i][j])+=b;
-                return b;
-            }
-        }
-    }
-    return 0;
+ 
+using namespace std;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+int n;
+int vis[505];
+vector<vector<int>> residualGraph;
+ 
+bool bfs(vector<vector<int>>& residualGraph, vector<int>& level, int source, int sink) {
+    fill(level.begin(), level.end(), -1);
+	level[source] = 0;
+	
+	queue<int> q;
+	q.push(source);
+ 
+	while (!q.empty())
+	{
+		int u = q.front();
+		q.pop();
+		for (int v=0; v < n; v++)
+		{
+			if (u != v && residualGraph[u][v] > 0 && level[v] < 0)
+			{
+ 
+				level[v] = level[u] + 1;
+				q.push(v);
+			}
+		}
+	}
+	return level[sink] < 0 ? false : true ;
 }
-void solve(){
-    int n,m,k; see(n,m,k);
-    while(k--){
-        int x,y; see(x,y);
-        int j1 = adj[500+y].sz;
-        int j2 = adj[x].sz;
-        adj[x].pb({500+y,1,j1});
-        adj[500+y].pb({x,0,j2});
-    }
-    rep(i,1,501){
-        int j1 = adj[i].sz;
-        int j2 = adj[0].sz;
-        adj[0].pb({i,1,j1});
-        adj[i].pb({0,0,j2});
-        int j3 = adj[1001].sz;
-        int j4 = adj[500+i].sz;
-        adj[500+i].pb({1001,1,j3});
-        adj[1001].pb({500+i,0,j4});
-    }
-    int ans=0;
-    while(1){
-        memset(vis,0,sizeof vis);
-        int f = dfs(0,inf);
-        ans+=f;
-        if (!f) break;
-    }
-    putl(ans);
-    rep(i,1,501){
-        for (auto [ii,ww,jj]: adj[i]){
-            if (ww==0 && ii>500){
-                putl(i,ii-500);
-            }
-        }
-    }
-}    
-signed main(){
-    IOS;
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    while(t--){
-        solve();
-        //cout<<'\n';
-    }
-    #ifdef LOCAL
-    clock_t tStart = clock();
-    cerr<<fixed<<setprecision(10)<<"\nTime Taken: "<<(double)(clock()- tStart)/CLOCKS_PER_SEC<<endl;
-    #endif
+ 
+int sendFlow(vector<vector<int>>& residualGraph, vector<int>& level, vector<int>& count, int u, int sink, int flow) {
+	if (u == sink)
+		return flow;
+ 
+    if (count[u] == (int)residualGraph[u].size())
+	    return 0;
+ 
+	for (int v=0; v < n; v++)
+	{
+		if (residualGraph[u][v] > 0)
+		{
+		    count[u]++;
+			if (level[v] == level[u]+1)
+			{
+			 	int curr_flow = min(flow, residualGraph[u][v]);
+ 
+			    int min_cap = sendFlow(residualGraph, level, count, v, sink, curr_flow);
+			    if (min_cap > 0)
+			    {
+                    residualGraph[u][v] -= min_cap;
+                    residualGraph[v][u] += min_cap;
+				    return min_cap;
+			    }
+			}
+		}
+	}
+	return 0;
+}
+ 
+int dinic_algorithm(vector<vector<int>>& graph, int source, int sink) {
+	if (source == sink)
+		return -1;
+ 
+	int max_flow = 0;
+    residualGraph = graph;
+    vector<int> level(n, -1);
+ 
+	while (bfs(residualGraph, level, source, sink) == true)
+	{
+		vector<int> count(n, 0);
+ 
+		while (int flow = sendFlow(residualGraph, level, count, source, sink, INT_MAX))
+			max_flow += flow;
+	}
+	return max_flow;
+}
+ 
+void addEdge(vector<vector<int>>& graph, int u, int v, int w) {
+    graph[u][v] = w;
+}
+ 
+int main() { _
+	int x, y, m;
+	cin >> x >> y >> m;
+	n = x+y+2;
+    vector<vector<int>> graph(n, vector<int> (n, 0));
+	vector<pii> edg;
+	for (int i = 1; i <= x; i++) addEdge(graph, 0, i, 1);
+	for (int i = x+1; i <= x+y; i++) addEdge(graph, i, n-1, 1);
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		addEdge(graph, a, b+x, 1);
+		edg.pb({a, b+x});
+	}
+	cout << dinic_algorithm(graph, 0, n-1) << '\n';
+	for (pii a : edg)
+		if (!residualGraph[a.F][a.S]) cout << a.F << ' ' << a.S-x << '\n';
+	return 0;
 }

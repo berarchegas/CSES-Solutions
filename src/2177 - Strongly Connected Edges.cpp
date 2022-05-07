@@ -1,61 +1,68 @@
 /*
 Problem Name: Strongly Connected Edges
 Problem Link: https://cses.fi/problemset/task/2177
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int mxN = 1e5+5;
-vector<pair<int,int>> ans;
-int flag = 0, cnt = 0;
-vector<int> adj[mxN];
-int vis[mxN], low[mxN];
-
-void dfs(int s, int p) {
-    vis[s] = ++cnt;
-    low[s] = vis[s];
-    for (auto i: adj[s]) {
-        if (i != p) {
-            if (vis[i]) {
-                low[s] = min(low[s], vis[i]);
-                if (vis[i] > vis[s])
-                    ans.push_back({i, s});
-            }
-            else {
-                dfs(i, s);
-                ans.push_back({s, i});
-                low[s] = min(low[i], low[s]);
-                if (low[i] > vis[s]) 
-                    flag = 1;
-            }
-        }
-    }
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+ 
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+ 
+const int MOD = 1e9 + 7;
+const int MAXN = 1e5 + 5;
+const ll INF = 1e18;
+ 
+vector<int> v[MAXN];
+vector<pii> edges;
+int low[MAXN], cnt = 0, vis[MAXN], dep[MAXN];
+ 
+void dfs(int node, int pai) {
+	vis[node] = ++cnt;
+	low[node] = cnt;
+	dep[node] = dep[pai] + 1;
+	for (int x : v[node]) {
+		if (x == pai) continue;
+		if (!vis[x]) {
+			dfs(x, node);
+			low[node] = min(low[node], low[x]);
+		}
+		else low[node] = min(low[node], vis[x]);
+	}
+	if (low[node] == vis[node] && pai > 0) edges.emplace_back(node, pai);
 }
-
-
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n, m; cin>>n>>m;
-    for (int i = 0; i < m; i++) {
-        int x, y; cin>>x>>y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
-    }
-    dfs(1, 0);
-    if (flag == 1) return cout<<"IMPOSSIBLE", 0;
-    for (int i = 1; i <= n; i++)
-        if (!vis[i])
-            return cout<<"IMPOSSIBLE", 0;
-    for (auto [i, j]: ans)
-        cout<<i<<' '<<j<<endl;
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+	int n, m;
+	cin >> n >> m;
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		v[a].push_back(b);
+		v[b].push_back(a);
+		edges.emplace_back(a, b);
+	}
+	int compo = 0;
+	for (int i = 1; i <= n; i++) {
+		if (!vis[i]) {
+			dfs(i, 0);
+			compo++;
+		}
+	}
+	if ((int)edges.size() > m || compo > 1) cout << "IMPOSSIBLE\n";
+	else {
+		for (auto x : edges) {
+			if (dep[x.second] > dep[x.first]) swap(x.first, x.second);
+			if (dep[x.first] - dep[x.second] == 1) 
+				cout << x.second << ' ' << x.first << '\n';
+			else 
+				cout << x.first << ' ' << x.second << '\n';
+		}
+	}
+    return 0;
 }

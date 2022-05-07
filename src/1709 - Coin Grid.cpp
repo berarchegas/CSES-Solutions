@@ -1,100 +1,136 @@
 /*
 Problem Name: Coin Grid
 Problem Link: https://cses.fi/problemset/task/1709
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int mxN = 205;
-const int INF = 1LL<<60;
-vector<tuple<int,int,int>> adj[mxN];
-bool vis[mxN];
-int dfs(int s, int f) {
-    if (s == 201) 
-        return f;
-    vis[s] = 1;
-    for (auto &[i, w, j]: adj[s]) {
-        if (w >= 1 && !vis[i]) {
-            int b = dfs(i, 1);
-            if (b > 0) {
-                w -= b;
-                get<1>(adj[i][j])+=b;
-                return b;
-            }
-        }
-    }
-    return 0;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+int n;
+int vis[505];
+vector<vector<int>> residualGraph;
+ 
+bool bfs(vector<vector<int>>& residualGraph, vector<int>& level, int source, int sink) {
+    fill(level.begin(), level.end(), -1);
+	level[source] = 0;
+	
+	queue<int> q;
+	q.push(source);
+ 
+	while (!q.empty())
+	{
+		int u = q.front();
+		q.pop();
+		for (int v=0; v < n; v++)
+		{
+			if (u != v && residualGraph[u][v] > 0 && level[v] < 0)
+			{
+ 
+				level[v] = level[u] + 1;
+				q.push(v);
+			}
+		}
+	}
+	return level[sink] < 0 ? false : true ;
 }
-set<int> adj2[mxN];
-void dfs(int s){
-    if (vis[s]) return;
-    vis[s] = 1;
-    for (auto i: adj2[s]) dfs(i);
+ 
+int sendFlow(vector<vector<int>>& residualGraph, vector<int>& level, vector<int>& count, int u, int sink, int flow) {
+	if (u == sink)
+		return flow;
+ 
+    if (count[u] == (int)residualGraph[u].size())
+	    return 0;
+ 
+	for (int v=0; v < n; v++)
+	{
+		if (residualGraph[u][v] > 0)
+		{
+		    count[u]++;
+			if (level[v] == level[u]+1)
+			{
+			 	int curr_flow = min(flow, residualGraph[u][v]);
+ 
+			    int min_cap = sendFlow(residualGraph, level, count, v, sink, curr_flow);
+			    if (min_cap > 0)
+			    {
+                    residualGraph[u][v] -= min_cap;
+                    residualGraph[v][u] += min_cap;
+				    return min_cap;
+			    }
+			}
+		}
+	}
+	return 0;
 }
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <=n; j++) {
-            char x; cin>>x;
-            if (x != '.') {
-                int j1 = adj[100+j].size();
-                int j2 = adj[i].size();
-                adj[i].push_back({100+j, 1, j1});
-                adj[100+j].push_back({i, 0, j2});
-                adj2[i].insert(100+j);
-            }
-        }
-    }
-    for (int i = 1; i <= 100; i++) {
-        int j1 = adj[i].size();
-        int j2 = adj[0].size();
-        adj[0].push_back({i, 1, j1});
-        adj[i].push_back({0, 0, j2});
-        j1 = adj[201].size();
-        j2 = adj[100+i].size();
-        adj[100+i].push_back({201, 1, j1});
-        adj[201].push_back({100+i, 0, j2});
-    }
-    int ans = 0;
-    while(1) {
-        memset(vis, 0, sizeof vis);
-        int f = dfs(0, INF);
-        ans += f;
-        if (!f) 
-            break;
-    }
-    cout<<ans<<endl;
-    int k = 0;
-    set<int> st;
-    for (int i = 1; i <= 100; i++) {
-        st.insert(i);
-        for (auto [s, w, j]: adj[i]) {
-            if (w == 0 && s>100) {
-                adj2[i].erase(s);
-                adj2[s].insert(i);
-                st.erase(i);
-            }
-        }
-    }
-    memset(vis, 0, sizeof vis);
-    for (auto i: st) {
-        if (!vis[i])
-            dfs(i);
-    }
-    for (int i = 1; i <= n; i++) {
-        if (!vis[i])
-            cout<<1<<' '<<i<<endl;
-        if (vis[100+i])
-            cout<<2<<' '<<i<<endl;
-    }
+ 
+int dinic_algorithm(vector<vector<int>>& graph, int source, int sink) {
+	if (source == sink)
+		return -1;
+ 
+	int max_flow = 0;
+    residualGraph = graph;
+    vector<int> level(n, -1);
+ 
+	while (bfs(residualGraph, level, source, sink) == true)
+	{
+		vector<int> count(n, 0);
+ 
+		while (int flow = sendFlow(residualGraph, level, count, source, sink, INT_MAX))
+			max_flow += flow;
+	}
+	return max_flow;
+}
+ 
+void addEdge(vector<vector<int>>& graph, int u, int v, int w) {
+    graph[u][v] = w;
+}
+ 
+int main() { _
+	cin >> n;
+	int tam = n;
+	n = 2*n+2;
+    vector<vector<int>> graph(n, vector<int> (n, 0));
+	for (int i = 1; i <= tam; i++) {
+		addEdge(graph, 0, i, 1);
+		addEdge(graph, i+tam, n-1, 1);
+		for (int j = tam+1; j <= 2*tam; j++) {
+			char c;
+			cin >> c;
+			if (c == 'o') addEdge(graph, i, j, 200);
+		}
+	}
+	cout <<  dinic_algorithm(graph, 0, n-1) << '\n';
+	memset(vis, 0, sizeof(vis));
+	queue<int> fila;
+	fila.push(0);
+	vis[0] = 1;
+	while (!fila.empty()) {
+		int atual = fila.front();
+		fila.pop();
+		for (int i = 1; i < n; i++) {
+			if (!vis[i] && residualGraph[atual][i]) {
+				vis[i] = 1;
+				fila.push(i);
+			}
+		}
+	}
+	for (int i = 1; i <= tam; i++) {
+		if (vis[0] != vis[i]) cout << "1 " << i << '\n';
+	}
+	for (int i = tam+1; i <= 2*tam; i++) {
+		if (vis[n-1] != vis[i]) cout << "2 " << i-tam << '\n';
+	}
+	return 0;
 }

@@ -1,32 +1,33 @@
 /*
 Problem Name: Polygon Area
 Problem Link: https://cses.fi/problemset/task/2191
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-#define X first
-#define Y second
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    pair<int,int> a[n];
-    for (int i = 0; i < n; i++)
-        cin>>a[i].X>>a[i].Y;
-    int ans = 0;
-    //shoelace formula
-    for (int i = 0; i < n; i ++) {
-        ans += (a[i].X*a[(i+1)%n].Y - a[(i+1)%n].X*a[i].Y);
-    }
-    cout<<abs(ans);
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+int main () { _
+	int n;
+	cin >> n;
+	vector<pii> v(n);
+	for (int i = 0; i < n; i++) cin >> v[i].F >> v[i].S;
+	ll ans = 0;
+	for (int i = 0; i < n; i++) {
+		pii last = (!i ? v[n-1] : v[i-1]);
+		ans += 1ll * (last.F - v[i].F) * (last.S + v[i].S);
+	}
+	cout << abs(ans) << '\n';
+    return 0;
 }

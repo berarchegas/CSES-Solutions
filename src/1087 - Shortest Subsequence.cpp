@@ -1,46 +1,41 @@
 /*
 Problem Name: Shortest Subsequence
 Problem Link: https://cses.fi/problemset/task/1087
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 2000100
+#define INF 1000000001
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-// #define int long long
-#define endl '\n'
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    string s; cin>>s;
-    int l = 0, r = 0;
-    bool a = 0, b = 0, c = 0, d = 0;
-    int n = s.size();
-    string ans;
-    while(l < n) {
-        a = 0, b = 0, c = 0, d = 0;
-        a += (s[l] == 'A'); b += (s[l] == 'C');
-        c += (s[l] == 'G'); d += (s[l] == 'T');
-        r = l+1;
-        while(r < n && a+b+c+d != 4) {
-            a += (s[r] == 'A'); b += (s[r] == 'C');
-            c += (s[r] == 'G'); d += (s[r] == 'T');
-            r++;
-        }
-        if (a+b+c+d == 4)
-            ans += s[r-1];
-        l = r;
-    }
-    cerr<<a<<' '<<b<<' '<<c<<' '<<d;
-    if (a+b+c+d == 4)
-        ans += 'A';
-    else if (!a) ans += 'A';
-    else if (!b) ans += 'C';
-    else if (!c) ans += 'G';
-    else if (!d) ans += 'T';
-    cout<<ans;
+typedef long long int ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 998244353;
+ 
+int main () { _
+	string s, resp;
+	cin >> s;
+	int tam = s.size();
+	set<char> st;
+	int ans = 0;
+	for (int i = 0; i < tam; i++) {
+		st.insert(s[i]);
+		if ((int)st.size() == 4) {
+			resp += s[i];
+			ans++;
+			st.clear();
+		}
+	}
+	if (!st.count('A')) resp += 'A';
+	else if (!st.count('C')) resp += 'C';
+	else if (!st.count('G')) resp += 'G';
+	else resp += 'T';
+	cout << resp << '\n';
+	return 0;	
 }

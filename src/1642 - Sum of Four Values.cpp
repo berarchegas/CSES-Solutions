@@ -1,102 +1,56 @@
 /*
 Problem Name: Sum of Four Values
 Problem Link: https://cses.fi/problemset/task/1642
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
-template<typename... T>
-void see(T&... args) { ((cin >> args), ...);}
-template<typename... T>
-void put(T&&... args) { ((cout << args << " "), ...);}
-template<typename... T>
-void putl(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-#define int long long
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 100100
+#define INF 1000000001
 #define pb push_back
 #define F first
 #define S second
-#define ll long long
-#define ull unsigned long long
-#define ld long double
-#define pii pair<int,int>
-#define vi vector<int>
-#define vii vector<pii>
-#define vc vector
-#define L cout<<'\n';
-#define E cerr<<'\n';
-#define all(x) x.begin(),x.end()
-#define rep(i,a,b) for (int i=a; i<b; ++i)
-#define rev(i,a,b) for (int i=a; i>b; --i)
-#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-#define setpr(x) cout<<setprecision(x)<<fixed
-#define sz size()
-#define seea(a,x,y) for(int i=x;i<y;i++){cin>>a[i];}
-#define seev(v,n) for(int i=0;i<n;i++){int x; cin>>x; v.push_back(x);}
-#define sees(s,n) for(int i=0;i<n;i++){int x; cin>>x; s.insert(x);}
-const ll inf = INT_MAX;
-const ld ep = 0.0000001;
-const ld pi = acos(-1.0);
-const ll md = 1000000007;
-
-int bsa(vii &v, int l, int r, int x) {
-    while (l <= r) { 
-        int m = l + (r - l) / 2; 
-        if (v[m].F == x) 
-            return m; 
-        if (v[m].F < x) 
-            l = m + 1; 
-        else
-            r = m - 1; 
-    } 
-    return -1; 
-} 
-void solve(){
-    int n,x; see(n,x);
-    vii v;
-    rep(i,0,n){
-        int z; see(z);
-        v.pb({z,i+1});
-    }
-    sort(all(v));
-    map<int,vii> mp;
-    rep(i,0,n){
-        rep(j,i+1,n){
-            mp[v[i].F+v[j].F].pb({v[i].S,v[j].S});
-        }
-    }
-    for (auto i: mp){
-        int y = x-i.F;
-        auto z = mp.find(y);
-        if (z!=mp.end()){
-            for (auto j: z->S){
-                for (auto k: i.S){
-                    if (j.F!=k.F && j.F!=k.S && j.S!=k.F && j.S!=k.S){
-                        put(j.F,j.S,k.F,k.S); return;
-                    }
-                }
-            }
-        }
-    }
-    put("IMPOSSIBLE");
-}    
-signed main(){
-    IOS;
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    while(t--){
-        solve();
-        //cout<<'\n';
-    }
-    #ifdef LOCAL
-    clock_t tStart = clock();
-    cerr<<fixed<<setprecision(10)<<"\nTime Taken: "<<(double)(clock()- tStart)/CLOCKS_PER_SEC<<endl;
-    #endif
+ 
+using namespace std;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9 + 7;
+ 
+bool comp (int a, int b, int c, int d) {
+	bool ber = false;
+	ber |= (a == b || a == c || a == d);
+	ber |= (b == c || b == d);
+	ber |= (c == d);
+	return ber;
+}
+ 
+int main() { _
+    int n, x;
+	cin >> n >> x;
+	vector<int> v(n);
+	for (int i = 0; i < n; i++) {
+		cin >> v[i];
+	}
+	vector<pair<ll, pii>> w;
+	vector<ll> u;
+	for (int i = 0; i < n; i++) {
+		for (int j = i+1; j < n; j++) {
+			w.pb({v[i] + v[j], {i, j}});
+			u.pb(v[i] + v[j]);
+		}
+	}	
+	sort(w.begin(), w.end());
+	sort(u.begin(), u.end());
+	int tam = w.size();
+	for (int i = 0; i < tam; i++) {
+		ll sum = x - w[i].F;
+		int pos = lower_bound(u.begin(), u.end(), sum) - u.begin();
+		while (pos < tam && (comp(w[i].S.F, w[i].S.S, w[pos].S.F, w[pos].S.S))) pos++;
+		if (pos < tam && w[pos].F == sum && !comp(w[i].S.F, w[i].S.S, w[pos].S.F, w[pos].S.S)) {
+			cout << w[i].S.F + 1 << ' ' << w[i].S.S + 1 << ' ' << w[pos].S.F + 1 << ' ' << w[pos].S.S + 1 << '\n';
+			return 0;
+		}
+	}
+	cout << "IMPOSSIBLE\n";
+    return 0;
 }

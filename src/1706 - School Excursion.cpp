@@ -1,66 +1,63 @@
 /*
 Problem Name: School Excursion
 Problem Link: https://cses.fi/problemset/task/1706
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 100100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int mxN = 1e5+5;
-int c = 0;
-vector<int> adj[mxN];
-bool vis[mxN];
-void dfs(int s){
-    if (vis[s]) return;
-    vis[s]=1; c++;
-    for (auto i: adj[s]) dfs(i);
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+vector<int> v[MAXN], vals;
+int vis[MAXN], cnt, dp[MAXN], used[MAXN], have[MAXN];
+ 
+void dfs(int node) {
+	cnt++;
+	vis[node] = 1;
+	for (int x : v[node]) 
+		if (!vis[x]) dfs(x);
 }
-int dp[mxN];
-map<int,int> mp;
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n, m; cin>>n>>m;
-    for (int i = 0; i < m; i++) {
-        int x,y; cin>>x>>y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
-    }
-    
-    for (int i = 0; i < n; i++) {
-        if (!vis[i+1]) {
-            c = 0;
-            dfs(i+1);
-            mp[c]++;
-        }
-    }
-    vector<int> v;
-    for (auto [i, c]: mp) {
-        int x = 0;
-        while(1<<x < c) {
-            v.push_back((1<<x)*i);
-            c -= 1<<x;
-            x++;
-        }
-        if (c)
-            v.push_back(c*i);
-    }
-    m = v.size();
-    dp[0] = 1;
-    for (int i = 0; i < m; i++) {
-        for (int j = n; j >= 1; j--) {
-            if (j >= v[i]) {
-                dp[j] = max(dp[j-v[i]], dp[j]);
-            }
-        }
-    }
-    for (int i = 1; i <= n; i++)
-        cout<<dp[i];
+ 
+int main() { _
+	int n, m, a, b;
+	cin >> n >> m;
+	for (int i = 0; i < m; i++) {
+		cin >> a >> b;
+		v[a].pb(b);
+		v[b].pb(a);
+	}
+	for (int i = 1; i <= n; i++) {
+		if (!vis[i]) {
+			cnt = 0;
+			dfs(i);
+			vals.pb(cnt);
+		}
+	}
+	sort(vals.begin(), vals.end());
+	for (int x : vals) have[x]++;
+	vals.erase(unique(vals.begin(), vals.end()), vals.end());
+	dp[0] = 1;
+	for (int x : vals) {
+		memset(used, 0, sizeof(used));
+		for (int i = 0; i <= n; i++) {
+			if (i + x > n) break;
+			if (dp[i] && !dp[i+x] && used[i] < have[x]) {
+				used[i+x] = used[i]+1;
+				dp[i+x] = 1;
+			}
+		}
+	}
+	for (int i = 1; i <= n; i++) cout << dp[i];
+	cout << '\n';
+    return 0;
 }

@@ -1,60 +1,64 @@
 /*
 Problem Name: Divisor Analysis
 Problem Link: https://cses.fi/problemset/task/2182
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int md = 1e9+7;
-
-int exp(int x, int y, int md){
-    int ans = 1;
-    x = x%md;
-    while (y > 0) {
-        if (y&1)
-            ans = ans*x%md;
-        y = y>>1;
-        x = x*x%md;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int fexp(ll b, ll e) {
+    ll resp = 1;
+    while (e) {
+        if (e&1) resp = (resp * b) % M;
+        e >>= 1;
+        b = (b * b) % M;
     }
-    return ans;
+    return resp;
 }
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    int c[3] = {1, 1, 1};
-    int flag = 0;
-    int sq = 1, num = 1, d = 1;
-    for (int i = 0; i < n; i++) {
-        int x, y; cin>>x>>y;
-        c[0] = c[0]*(y+1)%md;
-        int gsum = (exp(x, y+1, md) - 1 + md)%md*exp(x-1, md-2, md)%md;
-        c[1] = c[1]*gsum%md;
-        sq = sq*exp(x, y/2, md)%md;
-        num = num*exp(x, y, md)%md;
-        if ((y&1) && flag == 0) {
-            d = d*((y+1)/2)%(md-1);
-            flag = 1;
-        }
-        else 
-            d = d*(y+1)%(md-1);
-    }
-    //now two cases for product:
-    //if all powers are even, then ans = sq^d
-    //if at least power is odd, the ans = num^(d/2) [Use Fermat's little theorem]
-    if (flag == 1) 
-        c[2] = exp(num, d, md);
-    else 
-        c[2] = exp(sq, d, md);
-
-    cout<<c[0]<<' '<<c[1]<<' '<<c[2];
+ 
+int main () { _
+    int n, x, k, pos;
+	cin >> n;
+	vector<ll> ans(3, 1);
+	vector<pii> v;
+	bool odd = true;
+	ll exp = 1;
+	for (int i = 0; i < n; i++) {
+		cin >> x >> k;
+		v.pb({x, k});
+		if (odd && k&1) {
+			odd = false;
+			pos = i;
+		}
+		ans[0] = (ans[0] * (k+1)) % M;
+		ll prox = ((ll)(fexp(x, k+1) - 1) * fexp(x-1, M-2)) % M;
+        ans[1] = (ans[1] * prox) % M;
+	}
+	for (int i = 0; i < n; i++) {
+		if (!odd && pos == i) {
+			exp = (exp * (v[i].S+1)/2) % (M-1);
+		}
+		else exp = (exp * (v[i].S+1)) %  (M-1);
+	}
+	for (int i = 0; i < n; i++) {
+		if (odd) {
+			ans[2] = (ans[2] * fexp(v[i].F, (v[i].S/2) * exp)) % M;
+		}
+		else {
+			ans[2] = (ans[2] * fexp(v[i].F, exp * v[i].S)) % M;
+		}
+	}
+	for (int x : ans) cout << x << ' ';
+	cout << '\n';
+    return 0;   
 }

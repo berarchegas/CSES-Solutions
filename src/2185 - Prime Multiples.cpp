@@ -1,45 +1,46 @@
 /*
 Problem Name: Prime Multiples
 Problem Link: https://cses.fi/problemset/task/2185
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int INF = 1LL<<60;
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n,k; cin>>n>>k;
-    //inclusion-exclusion
-    int ans = 0;
-    int a[k];
-    for (int i = 0; i < k; i++) 
-        cin>>a[i];
-
-    for (int i = 1; i < 1<<k; i++) {
-        int x = -1;
-        if (__builtin_popcount(i)&1) x = 1;
-        int y = n;
-        int z = 1;
-        for (int j = 0; j < k; j++) {
-            if (i>>j&1) {
-                if (z >= n/a[j] + 1) {
-                    z = INF;
-                    break;
-                }
-                z = z*a[j];
-            }
-        }
-        y /= z;
-        ans += x*y;
-    }
-    cout<<ans;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int main () { _
+    ll n;
+	int k;
+	cin >> n >> k;
+	vector<ll> v(k), l(k);
+	for (int i = 0; i < k; i++) cin >> v[i];
+	sort(v.begin(), v.end());
+	for (int i = 0; i < k; i++) l[i] = n/v[i] + 1;
+	ll ans = 0;
+	for (int i = 1; i < (1<<k); i++) {
+		ll tot = 1;
+		bool par = true;
+		for (int j = 0; j < k; j++) {
+			if (i & (1<<j)) {
+				par = 1-par;
+				if (tot > l[j]) {
+					tot = 0;
+					break;	
+				}
+				tot *= v[j];
+			}
+		}
+		if (tot) tot = n/tot;
+		ans += (par ? -tot : tot);
+	}
+	cout << ans << '\n';
+    return 0;   
 }

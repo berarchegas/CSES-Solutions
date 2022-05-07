@@ -1,79 +1,102 @@
 /*
 Problem Name: Planets Queries II
 Problem Link: https://cses.fi/problemset/task/1160
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e17
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-template<typename... T>
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-
-#define int long long
-#define ff first
-#define ss second
-#define endl '\n'
-
-const long long inf = 1LL<<60; //1.5e18
-const int md = 1000000007;
-
-int succ[21][200005];
-int vis[200005];
-int len[200005];
-void dfs(int s) {
-    if (vis[s]) return;
-    vis[s] = 1;
-    dfs(succ[0][s]);
-    len[s] = len[succ[0][s]] + 1;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 998244353;
+ 
+int tree[MAXN], ciclo[MAXN], id[MAXN], peso[MAXN], tab[MAXN][20], cor[MAXN], dep[MAXN], in[MAXN], x;
+ 
+int sobe(int node, int k) {
+	if (k < 0) return -1;
+	for (int i = 19; i >= 0; i--) {
+		if (k & (1<<i)) node = tab[node][i];
+	}
+	return node;
 }
-int lift(int x, int d) {
-    if (d <=0) return x;
-    int i = 0;
-    while(d > 0) {
-        if (d&1) 
-            x = succ[i][x];
-        d>>=1;
-        i++;
-    }
-    return x;
+ 
+void dfs(int node) {
+	cor[node] = 1;
+	if (!cor[tab[node][0]]) dfs(tab[node][0]);
+	else if (cor[tab[node][0]] == 1) {
+		x++;
+		int atual = node, p = 0;
+		do {	
+			p++;
+			ciclo[atual] = x;
+			tree[atual] = atual;
+			id[atual] = p;
+			atual = tab[atual][0];
+		} while (atual != node);
+		peso[x] = p;
+	}
+	cor[node] = 2;
 }
-void solve(){
-    int n,q; cin>>n>>q;
-    for (int i = 1; i <= n; i++)
-        cin>>succ[0][i];
-    for (int i = 1; i <=20; i++) {
-        for (int j = 1; j <=n; j++) {
-            succ[i][j] = succ[i-1][succ[i-1][j]];
-        }
-    }
-    for  (int i = 1; i <=n; i++)
-        if (!vis[i])
-            dfs(i);
-    while(q--) {
-        int x,y; cin>>x>>y;
-        int xx = lift(x, len[x]); //end of the cycle (Case: x and y are in cycle such that x appears after y)
-        if (lift(x, len[x]-len[y]) == y) //if y is infront of x
-            cout<<len[x]-len[y]<<endl;
-        else if (lift(xx, len[xx]-len[y]) == y) 
-            cout<<len[x]+len[xx]-len[y]<<endl;
-        else 
-            cout<<-1<<endl;
-    }
-}    
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    for (int i = 1; i <= t; i++) {
-        //cout<<"Case #"<<i<<": ";
-        solve();
-        cout<<'\n';
-    }
+ 
+void dfs2(int node) {
+	cor[node] = 1;
+	if (!cor[tab[node][0]] && !ciclo[tab[node][0]]) dfs2(tab[node][0]);
+	tree[node] = tree[tab[node][0]];
+	dep[node] = dep[tab[node][0]] + 1;
+}
+ 
+int main() { _
+	x = 0;
+	int n, q;
+	cin >> n >> q;
+	for (int i = 1; i <= n; i++) {
+		cin >> tab[i][0];
+		in[tab[i][0]]++;
+	}
+	for (int i = 1; i < 20; i++) {
+		for (int j = 1; j <= n; j++) tab[j][i] = tab[tab[j][i-1]][i-1];
+	}
+	for (int i = 1; i <= n; i++) {
+		if (!cor[i]) dfs(i);
+	}
+	memset(cor, 0, sizeof(cor));
+	for (int i = 1; i <= n; i++) {
+		if (!in[i]) dfs2(i);
+	}
+	int a, b;
+	for (int i = 0; i < q; i++) {
+		cin >> a >> b;
+		if (ciclo[a]) {
+			if (ciclo[b]) {
+				if (ciclo[a] == ciclo[b]) {
+					if (id[b] >= id[a]) cout << id[b] - id[a] << '\n';
+					else cout << peso[ciclo[b]] + id[b] - id[a] << '\n';
+				}
+				else cout << "-1\n";
+			}
+			else if (!ciclo[b]) cout << "-1\n";
+		}
+		else if (!ciclo[a]) {
+			if (!ciclo[b]) {
+				if (sobe(a, dep[a] - dep[b]) == b) cout << dep[a] - dep[b] << '\n';
+				else cout << "-1\n";
+			}
+			else if (ciclo[b]) {
+				if (ciclo[tree[a]] == ciclo[b]) {
+					if (id[b] >= id[tree[a]]) cout << id[b] - id[tree[a]] + dep[a] << '\n';
+					else cout << peso[ciclo[b]] + id[b] - id[tree[a]] + dep[a] << '\n';
+				}
+				else cout << "-1\n";
+			}
+		}
+	}
+    return 0;
 }

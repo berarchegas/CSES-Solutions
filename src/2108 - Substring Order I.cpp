@@ -1,77 +1,90 @@
 /*
 Problem Name: Substring Order I
 Problem Link: https://cses.fi/problemset/task/2108
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
- 
-#define int long long
-#define endl '\n'
- 
-const int mxN = 1e5+5;
-int sa[mxN], pos[mxN], tmp[mxN], lcp[mxN];
-int gap, N;
-string S;
- 
-bool comp(int x, int y) {
-    if (pos[x] != pos[y])
-        return pos[x] < pos[y];
-    x += gap;
-    y += gap;
-    return (x < N && y < N) ? pos[x] < pos[y] : x > y;
-}
- 
-void suffix() {
-    for (int i = 0; i < N; i++)
-        sa[i] = i, pos[i] = S[i];
- 
-    for (gap = 1;; gap <<= 1) {
-        sort(sa, sa+N, comp);
-        for (int i = 0; i < N-1; i++)
-            tmp[i+1] = tmp[i] + comp(sa[i], sa[i+1]);
-        for (int i = 0; i < N; i++)
-            pos[sa[i]] = tmp[i];
-        if (tmp[N - 1] == N - 1)
-            break;
-    }
-}
- 
-void build_lcp() {
-    for (int i = 0, k = 0; i < N; i++) if (pos[i] != N-1) {
-        int j = sa[pos[i] + 1];
-        while (S[i + k] == S[j + k])
-            k++;
-        lcp[pos[i]] = k;
-        if (k) k--;
-    }
-}
- 
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
+#include <bits/stdc++.h>
     
-    cin>>S; N = S.size();
-    suffix();
-    build_lcp();
-    int k; cin>>k;
-    int prev = 0;
-    int cur = 0;
-    for (int i = 0; i < N; i++) {
-        if (cur + (N-sa[i]) - prev >= k) {
-            int j = prev;
-            string ans = S.substr(sa[i], j);
-            while (cur < k) {
-                ans += S[sa[i]+j];
-                cur++;
-                j++;
-            }
-            return cout << ans, 0;
-        }
-        cur += (N-sa[i]) - prev;
-        prev = lcp[i];
+using namespace std;
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+    
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+    
+const int MOD = 1e9 + 7;
+const int MAX = 4e3 + 5;
+const ll INF = 2e18;
+ 
+void count_sort(vector<int> &p, vector<int> &c) {
+    int n = p.size();   
+    vector<int> cnt(n);
+    for (auto x : c) cnt[x]++;
+    vector<int> p_new(n), pos(n);
+    pos[0] = 0;
+    for (int i = 1; i < n; i++) {
+        pos[i] = pos[i - 1] + cnt[i - 1];
     }
+    for (auto x : p) {
+        p_new[pos[c[x]]] = x;
+        pos[c[x]]++;
+    }
+    p = p_new;
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    string s;
+    cin >> s;
+    s += '$';
+    int n = s.size();
+    vector<int> p(n), c(n);
+    {
+        vector<pair<char, int>> a(n);
+        for (int i = 0; i < n; i++) a[i] = {s[i], i};
+        sort(a.begin(), a.end());
+        for (int i = 0; i < n; i++) p[i] = a[i].second;
+        c[p[0]] = 0;
+        for (int i = 1; i < n; i++) {
+            if (a[i - 1].first == a[i].first) c[p[i]] = c[p[i - 1]];
+            else c[p[i]] = c[p[i - 1]] + 1;
+        }
+    }
+    int k = 0;
+    while ((1 << k) < n) {
+        for (int i = 0; i < n; i++) p[i] = (p[i] - (1 << k) + n) % n;
+        count_sort(p, c);
+        vector<int> c_new(n);
+        c_new[p[0]] = 0;
+        for (int i = 1; i < n; i++) {
+            pii prev = {c[p[i - 1]], c[(p[i - 1] + (1 << k)) % n]};
+            pii now = {c[p[i]], c[(p[i] + (1 << k)) % n]};
+            if (prev == now) c_new[p[i]] = c_new[p[i - 1]];
+            else c_new[p[i]] = c_new[p[i - 1]] + 1;
+        }
+        c = c_new;
+        k++;
+    }
+    vector<int> lcp(n);
+    k = 0;
+    for (int i = 0; i < n - 1; i++) {
+        int pi = c[i];
+        int j = p[pi - 1];
+        while (s[i + k] == s[j + k]) k++;
+        lcp[pi] = k;
+        k = max(k - 1, 0);
+    }
+    ll find;
+    cin >> find;
+    ll tot = 0;
+    for (int i = 1; i < n; i++) {
+        if (tot + n - p[i] - 1 - (!i ? 0 : lcp[i]) >= find) {
+            // just print
+            cout << s.substr(p[i], find - tot + lcp[i]) << '\n';
+            break;
+        }
+        tot += n - p[i] - 1 - (!i ? 0 : lcp[i]);
+    }
+    return 0;
 }

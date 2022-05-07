@@ -1,81 +1,81 @@
 /*
 Problem Name: Required Substring
 Problem Link: https://cses.fi/problemset/task/1112
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
-
-template<typename... T>
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-
-#define int long long
-#define ff first
-#define ss second
-#define endl '\n'
-
-const long long inf = 1LL<<60; //1.5e18
-const int md = 1000000007;
-
-int dp[1005][105];
-int exp(int x, unsigned int y, int p){
-    int res=1; x=x%p;
-    while(y>0){
-        if (y&1) res= (res*x)%p; y=y>>1; x=(x*x)%p;
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+ 
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+ 
+const int MOD = 1e9 + 7;
+const int MAXN = 1e5 + 5;
+const ll INF = 2e18;
+ 
+vector<int> prefix(string s) {
+    int n = (int)s.length();
+    vector<int> pi(n);
+    for (int i = 1; i < n; i++) {
+        int j = pi[i-1];
+        while (j > 0 && s[i] != s[j])
+            j = pi[j-1];
+        if (s[i] == s[j])
+            j++;
+        pi[i] = j;
     }
-    return res;
+    return pi;
 }
-void solve(){
-    int n; cin>>n;
-    string s; cin>>s;
-    int m = s.size();
-    //dp[i][j] = no of strings of length i which do not contain s
-    //           and whose suffix of length j is equal to the prefix of s
-    //           
-    //Let's add one character to each prefix of s and determine the max length 
-    //of suffix which is also a prefix of s formed by the addition of each character
-    int len[m][26];
-    for (int i = 0; i < m; i++) {
+ 
+vector<vector<int>> aut;
+ 
+void automato(string s) {
+    vector<int> kmp = prefix(s + '$');
+    int n = s.size() + 1;
+    aut.assign(n, vector<int> (26));
+    for (int i = 0; i < n; i++) {
         for (int j = 0; j < 26; j++) {
-            string pre = s.substr(0,i);
-            pre += j+'A';
-            len[i][j] = 0;
-            for (int k = 0; k < pre.size(); k++) {
-                if (pre.substr(k) == s.substr(0,pre.size() - k)) {
-                    len[i][j] = pre.size() - k;
-                    break;
-                }
-            }
+            if (i > 0 && 'A' + j != s[i]) 
+                aut[i][j] = aut[kmp[i -  1]][j];
+            else 
+                aut[i][j] = i + ('A' + j == s[i]);
         }
     }
+}
+ 
+void add(int &a, int b) {
+    a += b;
+    if (a >= MOD) a -= MOD;
+}
+ 
+// dp[position][size of prefix of s][char i´m at]
+int dp[1005][105];
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n, m;
+    string s;
+    cin >> n >> s;
+    m = s.size();
+    automato(s);
     dp[0][0] = 1;
-    for (int i = 1; i <=n; i++) {
+    for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             for (int k = 0; k < 26; k++) {
-                (dp[i][len[j][k]] += dp[i-1][j])%=md;
+                if (aut[j][k] == m) continue;
+                add(dp[i + 1][aut[j][k]], dp[i][j]);
             }
         }
     }
-    int ans = exp(26,n,md);
+    int ans = 1;
+    for (int i = 0; i < n; i++) ans = (ans * 26ll) % MOD;
     for (int i = 0; i < m; i++) {
-        ans = (ans - dp[n][i] + md) % md;
+        add(ans, MOD - dp[n][i]);
     }
-    cout<<ans;
-}    
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    for (int i = 1; i <= t; i++) {
-        //cout<<"Case #"<<i<<": ";
-        solve();
-        cout<<'\n';
-    }
+    cout << ans << '\n';
+    return 0;
 }

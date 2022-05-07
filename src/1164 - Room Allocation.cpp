@@ -1,88 +1,72 @@
 /*
 Problem Name: Room Allocation
 Problem Link: https://cses.fi/problemset/task/1164
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
-template<typename... T>
-void see(T&... args) { ((cin >> args), ...);}
-template<typename... T>
-void put(T&&... args) { ((cout << args << " "), ...);}
-template<typename... T>
-void putl(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-#define int long long
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 100100
+#define INF 1000000001
 #define pb push_back
 #define F first
 #define S second
-#define ll long long
-#define ull unsigned long long
-#define ld long double
-#define pii pair<int,int>
-#define vi vector<int>
-#define vii vector<pii>
-#define vc vector
-#define L cout<<'\n';
-#define E cerr<<'\n';
-#define all(x) x.begin(),x.end()
-#define rep(i,a,b) for (int i=a; i<b; ++i)
-#define rev(i,a,b) for (int i=a; i>b; --i)
-#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-#define setpr(x) cout<<setprecision(x)<<fixed
-#define sz size()
-#define seea(a,x,y) for(int i=x;i<y;i++){cin>>a[i];}
-#define seev(v,n) for(int i=0;i<n;i++){int x; cin>>x; v.push_back(x);}
-#define sees(s,n) for(int i=0;i<n;i++){int x; cin>>x; s.insert(x);}
-const ll inf = INT_MAX;
-const ld ep = 0.0000001;
-const ld pi = acos(-1.0);
-const ll md = 1000000007;
-
-void solve(){
-    //good implementation
-    int n; see(n);
-    vc<tuple<int,int,int>> v;
-    rep(i,0,n){
-        int x,y; see(x,y);
-        v.pb({x,0,i});
-        v.pb({y,1,i});
-    }
-    sort(all(v));
-    int c=0; int ans[n]; vi av;
-    for (auto [x,y,i] : v){
-        if (y==0) { //entry
-            c++;
-            if (av.empty()) ans[i]=c;
-            else{
-                ans[i] = av.back(); av.pop_back();
-            }
-        }
-        else {
-            c--;
-            av.pb(ans[i]);
-        }
-    }
-    putl(*max_element(ans,ans+n));
-    rep(i,0,n) put(ans[i]);
-}    
-signed main(){
-    IOS;
-    #ifndef ONLINE_JUDGE
-    // freopen("input.txt", "r" , stdin);
-    // freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    while(t--){
-        solve();
-        //cout<<'\n';
-    }
-    #ifndef ONLINE_JUDGE
-    clock_t tStart = clock();
-    cerr<<fixed<<setprecision(10)<<"\nTime Taken: "<<(double)(clock()- tStart)/CLOCKS_PER_SEC<<endl;
-    #endif
+ 
+using namespace std;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9 + 7;
+ 
+struct t {
+	int f, s;
+	bool sair;
+};
+ 
+int main() { _
+    int n;
+	t aux;
+	cin >> n;
+	vector<t> v;
+	vector<int> w(n, -1);
+	for (int i = 0; i < n; i++) {
+		cin >> aux.f >> aux.s;
+		int depois = aux.s;
+		aux.s = i;
+		aux.sair = false;
+		v.pb(aux);
+		aux.f = depois+1;
+		aux.sair = true;
+		v.pb(aux);
+	}
+	int tot = 1;
+	queue<int> q;
+	sort(v.begin(), v.end(), [&](t a, t b) { 
+		if (a.f != b.f) return a.f < b.f;
+		return (a.sair && !b.sair);
+	});
+	for (t x : v) {
+		if (w[x.s] == -1) {
+			if (q.empty()) {
+				w[x.s] = tot++;
+			}
+			else {
+				w[x.s] = q.front();
+				q.pop();
+			}
+		}
+		else {
+			q.push(w[x.s]);
+		}
+	}
+	cout << tot-1 << '\n';
+	sort(v.begin(), v.end(), [&](t a, t b) {
+		return a.s < b.s;
+	});
+	bool ber = true;
+	for (t x : v) {
+		if (ber)
+			cout << w[x.s] << ' ';
+		ber = 1-ber;
+	}
+	cout << '\n';
+    return 0;
 }

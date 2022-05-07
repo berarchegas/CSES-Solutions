@@ -1,44 +1,45 @@
 /*
 Problem Name: Grundy's Game
 Problem Link: https://cses.fi/problemset/task/2207
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int mxN = 1e6+6;
-
-vector<int> dp = {0, 0, 0};
-int mex(vector<int> v) {
-    set<int> s;
-    for (auto i: v)
-        s.insert(i);
-    for (int i = 0; i < mxN; i++) {
-        if (s.count(i) == 0) return i;
-    }
-}
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int t; cin>>t;
-    for (int i = 3; i < 2000; i++) {
-        vector<int> v;
-        for (int j = 1; i-j > j; j++) {
-            v.push_back(dp[j]^dp[i-j]);
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int main () { _
+    int t;
+    cin >> t;
+    vector<int> v(2050);
+    for (int i = 3; i <= 2000; i++) {
+        vector<int> aux;
+        for (int j = i-1; j > i-j; j--) {
+           aux.pb(v[j] ^ v[i-j]);
         }
-        dp.push_back(mex(v));
+        sort(aux.begin(), aux.end());
+        int resp = 0;
+        for (auto x : aux) {
+            if (x > resp) break;
+            else if (x == resp) resp++;
+        }
+        v[i] = resp;
     }
-    while(t--) {
-        int n; cin>>n;
-        if (n >= 2000) cout<<"first"<<endl;
-        else cout<< (dp[n] > 0 ? "first" : "second")<<endl;
+    while (t--) {
+        int n;
+        cin >> n;
+        if (n <= 2000) {
+            cout << (v[n] ? "first\n" : "second\n");
+        }
+        else cout << "first\n";
     }
+    return 0;
 }

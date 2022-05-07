@@ -1,54 +1,57 @@
 /*
 Problem Name: String Reorder
 Problem Link: https://cses.fi/problemset/task/1743
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
  
-#define int long long
-#define endl '\n'
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
  
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    string s; cin>>s;
-    int n = s.size();
-    sort(s.begin(), s.end());
-    set<int> str;
-    int fq[27] = {0};
-    for (auto i: s) {
-        fq[i-'A']++;
-        str.insert(i);
+const int MOD = 1e9 + 7;
+const int MAXN = 2e5 + 5;
+const ll INF = 1e18;
+ 
+vector<int> v(26);
+string s;
+ 
+bool valid(int n) {
+    int maxi = 0;
+    for (int i = 0; i < 26; i++) maxi = max(maxi, v[i]);
+    if (maxi > n - maxi + 1) return false;
+    return true;
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cin >> s;
+    int maxi = 0, n = s.size();
+    for (auto x : s) {
+        v[x-'A']++;
+        maxi = max(maxi, v[x-'A']);
     }
-
-    auto it = max_element(fq, fq+27);
-    if (2**it - n > 1) return cout<<-1, 0;
-
-    string ans;
-    char prev = 26+'A';
-    while(2**it - n < 1) {
-        char x = *str.begin();
-        str.erase(x);
-        ans += x; fq[x-'A']--;
-        if (fq[prev-'A'])
-            str.insert(prev);
-        prev = x;
-        it = max_element(fq, fq+27);
-        n--;
+    if (maxi > n - maxi + 1) cout << "-1\n";
+    else {
+        string ans;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < 26; j++) {
+                if (v[j] && (!i ? true : (ans[i-1] != (('A' + j))))) {
+                    v[j]--;
+                    ans += ('A'+j);
+                    if (valid(n - i - 1)) break;
+                    else {
+                        v[j]++;
+                        ans.pop_back();
+                    }
+                }
+            }
+        }
+        cout << ans << '\n';
     }
-    if (*it) {
-        string aux; char x = it-fq+'A';
-        for (int i = 0; i < 26; i++) if (x-'A' != i)
-            for (int j = 0; j < fq[i]; j++) 
-                aux += i+'A';
-        ans += x;
-        for (auto i: aux)
-            ans += i, ans += x;
-    }
-    cout<<ans;
+    return 0;
 }

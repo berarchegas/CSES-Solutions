@@ -1,55 +1,37 @@
 /*
 Problem Name: Stick Game
 Problem Link: https://cses.fi/problemset/task/1729
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
-
-template<typename... T>
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-
-#define int long long
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
 #define pb push_back
 #define F first
 #define S second
-
-const int inf = 1LL<<62;
-const int md = 1000000007;
-
-void solve(){
-    int n,k; cin>>n>>k;
-    int dp[n+1] = {0};
-    dp[0] = 0;
-    vector<int> p;
-    for (int i = 0; i < k ; i++)  {
-        int x; cin>>x;
-        p.push_back(x);
+ 
+using namespace std;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int main () { _
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(k), ans(n+1);
+    for (int i = 0; i < k; i++) {
+        cin >> v[i];
     }
     for (int i = 1; i <= n; i++) {
-        dp[i] = 0;
-        for (auto j: p) {
-            if (i - j >= 0) {
-                if (dp[i - j] == 0) dp[i]=1;
+        for (int j = 0; j < k; j++) {
+            if (i - v[j] >= 0 && !ans[i-v[j]]) {
+                ans[i] = 1;
+                break;
             }
-        }
-        if (dp[i]) cout<<'W';
-        else cout<<'L';
+        }        
+        cout << (ans[i] ? 'W' : 'L');
     }
-}   
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    for (int i = 1; i <= t; i++) {
-        solve();
-        cout<<'\n';
-    }
+    cout << '\n';
+    return 0;
 }

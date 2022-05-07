@@ -1,33 +1,37 @@
 /*
 Problem Name: Counting Bits
 Problem Link: https://cses.fi/problemset/task/1146
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    int dp[50] = {0};
-    dp[0] = 1;
-    for (int i = 1; i < 50; i++) 
-        dp[i] = 2*dp[i-1] + ((1LL<<(i-1)) - 1);
-    int ans = 0;
-    while(n>0) {
-        int b = log2(n);
-        ans += dp[b];
-        b = 1LL<<b;
-        ans += n - b;
-        n = n - b;
-    }
-    cout<<ans;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+int main () { _
+	ll n;
+	cin >> n;
+	ll ans = 0, aux, add, two;
+	n++;
+	for (int i = 0; i <= 50; i++) {
+		two = (1ll<<i);
+		aux = n - two;
+		if (aux < 0) break;
+		add = aux / two;
+		if (add&1) add = ((add+1) / 2) * two;
+		else add = add * two / 2 + aux % two;
+		ans += add;
+	}
+	cout << ans << '\n';
+    return 0;
 }

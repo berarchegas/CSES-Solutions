@@ -1,52 +1,50 @@
 /*
 Problem Name: Minimum Euclidean Distance
 Problem Link: https://cses.fi/problemset/task/2194
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 2000100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-#define P pair<int, int>
-#define X first
-#define Y second
-
-int norm(P a, P b) {
-    return (b.X - a.X) * (b.X - a.X) + (b.Y - a.Y) * (b.Y - a.Y);
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+ll dist(pll a, pll b) {
+	return (a.F - b.F) * (a.F - b.F) + (a.S - b.S) * (a.S - b.S);
 }
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    vector<P> v(n);
-    int d = LLONG_MAX;
-    for (int i = 0; i < n; i++) {
-        int x, y; cin >> x >> y;
-        v[i] = {x, y};
-    }
-    sort(v.begin(), v.end());
-    set<P> s = {{v[0].Y, v[0].X}};
-    int j = 0;
-    for (int i = 1; i < n; i++) {
-        auto it = s.begin();
-        int dd = ceil(sqrt(d));
-        while (j < i && v[j].X < v[i].X - dd) {
-            s.erase({v[j].Y, v[j].X});
-            j++;
-        }
-
-        auto l = s.lower_bound({v[i].Y - dd, 0});
-        auto r = s.upper_bound({v[i].Y + dd, 0});
-        for (auto it = l; it != r; it++) {
-            d = min(d, norm({it->Y, it->X}, v[i]));
-        } 
-        s.insert({v[i].Y, v[i].X});
-    }
-    cout << d;
+ 
+int main () { _
+	int n;
+	cin >> n;
+	vector<pll> v(n);
+	for (int i = 0; i < n; i++) cin >> v[i].S >> v[i].F;
+	sort(v.begin(), v.end(), [&] (pll a, pll b) { return a.S < b.S; });
+	ll ans = 9e18;
+	ll d = 1e10;
+	set<pll> s;
+	s.insert(v[0]);
+	for (int i = 1; i < n; i++) {
+		while (!s.empty() && abs(v[i].S - s.begin()->S) > d)
+			s.erase(*s.begin());
+		auto it = s.lower_bound({v[i].F - d + 1, v[i].S});
+		while (it != s.end() && it->F < v[i].F + d - 1) {
+			if (dist(*it, v[i]) < ans) {
+				ans = dist(*it, v[i]);
+				d = ceil(sqrt(ans));
+			}
+			it++;
+		}
+		s.insert(v[i]);
+	}
+	cout << ans << '\n';
+    return 0;
 }

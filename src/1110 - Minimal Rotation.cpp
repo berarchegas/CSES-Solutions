@@ -1,53 +1,56 @@
 /*
 Problem Name: Minimal Rotation
 Problem Link: https://cses.fi/problemset/task/1110
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
-
-template<typename... T>
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-
-#define int long long
-#define F first
-#define S second
-
-const long long inf = 1LL<<62;
-const int md = 1000000007;
-
-void solve(){
-    string s;
-    cin>>s;
-    s+=s;
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+ 
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+ 
+const int MOD = 1e9 + 7;
+const int MAXN = 1e5 + 5;
+const ll INF = 2e18;
+ 
+// https://en.wikipedia.org/wiki/Lexicographically_minimal_string_rotation
+ 
+int least_rotation(string s) {
+    s += s;
     int n = s.size();
-    int i = 0;
-    int ans = 0;
-    while (i < n/2) {
-        ans = i;
-        int k = i, j = i + 1;
-        while (j < n && s[j] >= s[k]) {
-            if (s[j] == s[k]) k++;
-            if (s[j] > s[k] ) k = i;
-            j++;
+    vector<int> f(n, -1);
+    int k = 0;
+    for (int j = 1; j < n; j++) {
+        int sj = s[j];
+        int i = f[j - k - 1];
+        while (i != -1 && sj != s[k + i + 1]) {
+            if (sj < s[k + i + 1])
+                k = j - i - 1;
+            i = f[i];
         }
-        while(i <= k) i += j - k;
+        if (sj != s[k + i + 1]) {
+            if (sj < s[k])
+                k = j;
+            f[j - k] = -1;
+        }
+        else {
+            f[j - k] = i + 1;
+        }
     }
-    cout<<s.substr(ans,n/2);
-}    
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    for (int i = 1; i <= t; i++) {
-        solve();
-        cout<<'\n';
-    }
+    return k;
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    string s;
+    cin >> s;
+    int st = least_rotation(s), n = s.size();
+    for (int i = st; i < n; i++) cout << s[i];
+    for (int i = 0; i < st; i++) cout << s[i];
+    cout << '\n';
+    return 0;
 }

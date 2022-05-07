@@ -1,51 +1,55 @@
 /*
 Problem Name: Increasing Subsequence II
 Problem Link: https://cses.fi/problemset/task/1748
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-map<int,int> mp;
-const int mxN = 200005;
-const int md = 1e9+7;
-int bit[mxN];
-void upd(int k, int v) {
-    for (; k < mxN; k += k&-k) 
-        (bit[k] += v)%=md;;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+ll a[MAXN], dp[MAXN];
+int v[MAXN];
+ 
+void upd(int pos, ll val) { for (; pos < MAXN; pos += (pos & -pos)) a[pos] = (a[pos] + val) % M; }
+ 
+ll sum(int pos) {
+	ll ans = 1;
+	for (; pos > 0; pos -= (pos & -pos)) {
+		ans += a[pos];
+		if (ans >= M) ans -= M;
+	}
+	return ans;
 }
-int qry(int k) {
-    int sum = 0;
-    for (; k > 0; k -= k&-k)
-        (sum += bit[k])%=md;
-    return sum;
-}
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    //index compression
-    int a[n];
-    set<int> s;
-    for (int i = 0; i < n; i++) {
-        cin>>a[i];
-        s.insert(a[i]);
-    }
-    int ct = 0;
-    for (auto i: s)
-        mp[i] = ++ct;
-    int ans = 0;
-    for (int i = 0; i < n; i++) {
-        int x = qry(mp[a[i]]-1)+1;
-        (ans += x)%=md;
-        upd(mp[a[i]], x);
-    }
-    cout<<ans;
+ 
+int main () { _
+	int n;
+	cin >> n;
+	vector<int> w;
+	for (int i = 1; i <= n; i++) {
+		cin >> v[i];
+		w.pb(v[i]);
+	}
+	sort(w.begin(), w.end());
+	w.erase(unique(w.begin(), w.end()), w.end());
+	for (int i = 1; i <= n; i++) {
+		v[i] = upper_bound(w.begin(), w.end(), v[i]) - w.begin();
+	}
+	for (int i = 1; i <= n; i++) {
+		dp[i] += sum(v[i]-1);
+		dp[i] %= M;
+		upd(v[i], dp[i]);
+	}
+	cout << sum(MAXN-1) - 1 << '\n';
+    return 0;
 }

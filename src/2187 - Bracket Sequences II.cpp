@@ -1,58 +1,56 @@
 /*
 Problem Name: Bracket Sequences II
 Problem Link: https://cses.fi/problemset/task/2187
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int mxN = 1e6+6;
-const int md = 1e9+7;
-int F[mxN], I[mxN];
-
-int exp(int x, int y, int md){
-    int ans = 1;
-    x = x%md;
-    while (y > 0) {
-        if (y&1)
-            ans = ans*x%md;
-        y = y>>1;
-        x = x*x%md;
-    }
-    return ans;
-}
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    string s; cin>>s;
-    if (n&1) return cout<<0, 0;
-    n >>= 1;
-    int c = 0, k = s.size();
-    int x = 0, y = 0;
-    for (int i = 0; i < k; i++) {
-        if (s[i] == ')') c--, y++;
-        else if (s[i] == '(') c++, x++;
-        if (c < 0) return cout<<0, 0;
-    }
-    if (x > n) return cout<<0, 0;
-    if (x == n) return cout<<1, 0;
-    F[0] = 1, I[0] = 1;
-    for (int i = 1; i < mxN; i++) {
-        F[i] = i*F[i-1]%md;
-        I[i] = exp(F[i], md-2, md);
-    }
-    //total ways from remaining brackets
-    int ans = F[2*n-x-y]*I[n-x]%md*I[n-y]%md; 
-    //subtracting invalid ways: taking more left brakcets than right
-    ans = (ans - F[2*n-x-y]*I[n-x-1]%md*I[n-y+1]%md + md)%md; 
-    cout<<ans;
+typedef long long ll;
+typedef pair<int, int> pii;
+const int M = 1e9 + 7;
+ 
+int main () { _
+	int n;
+	string s;
+	cin >> n >> s;
+	int x = 0, y = 0;
+	bool valid = true;
+	for (int i = 0; i < (int)s.size(); i++) {
+		x += (s[i] == '(');
+		y += (s[i] == ')');
+		valid &= (x >= y);
+	}
+	vector<ll> fat(2e6+10, 1), inv(1e6+10);
+	for (int i = 2; i <= 2e6; i++) {
+		fat[i] = (fat[i-1] * i) % M;
+	}	
+	ll b = fat[1e6], e = M-2, resp = 1;
+	while (e) {
+		if (e&1) resp = resp * b % M;
+		e = (e>>1);
+		b = b * b % M;
+	}
+	inv[1e6] = resp;
+	for (int i = 1e6-1; i >= 0; i--) {
+		inv[i] = (inv[i+1] * (i+1)) % M;
+	}
+	if (!valid || x > n/2 || n&1) cout << "0\n";
+	else if (x == n/2) cout << "1\n";
+	else {
+		ll ans = fat[n - x - y] * inv[n/2 - x] % M;
+		ans = ans * inv[n/2 - y] % M;
+		ll tira = fat[n - x - y] * inv[n/2 - y + 1] % M;
+		tira = tira * inv[n/2 - x - 1] % M;
+		ans -= tira;
+		if (ans < 0) ans += M;
+		cout << ans << '\n';
+	}
+	return 0;
 }

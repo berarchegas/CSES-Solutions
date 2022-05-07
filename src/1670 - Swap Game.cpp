@@ -1,107 +1,87 @@
 /*
 Problem Name: Swap Game
 Problem Link: https://cses.fi/problemset/task/1670
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-// #define int long long
-#define endl '\n'
-
-unordered_set<int> vis;
-int go(int x1,int  x2, int x3,int  x4,int  x5,int  x6,int  x7,int  x8,int  x9) {
-    return x1*100000000 + x2*10000000 + x3*1000000 
-    + x4*100000 + x5*10000 + x6*1000 + x7*100 + x8*10 + x9;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+const int N = 381367045;
+ 
+bitset<N> vis;
+int pwr[10];
+ 
+int h(int atual, int pos) {
+	if (pos == 2 || pos == 5) return 0;
+	int ini = atual;
+	int p0, p1, cnt = 0;
+	while (cnt <= pos) {
+		if (cnt == pos) p0 = atual % 9;
+		atual /= 9;
+		cnt++;
+	}
+	p1 = atual % 9;
+	return ini - pwr[pos] * p0 - pwr[pos+1] * p1 + pwr[pos] * p1 + pwr[pos+1] * p0;
 }
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int x = 0;
-    for (int i = 0; i < 9; i++) {
-        int a; cin>>a;
-        x = x*10+a;
-    }
-    queue<pair<int, int>> q;
-    q.push({123456789, 0});
-    vis.insert(123456789);
-    while(!q.empty()) {
-        auto [s, c] = q.front();
-        q.pop();
-        if (s == x) return cout<<c, 0;
-        int x9 = s%10; s/=10;
-        int x8 = s%10; s/=10;
-        int x7 = s%10; s/=10;
-        int x6 = s%10; s/=10;
-        int x5 = s%10; s/=10;
-        int x4 = s%10; s/=10;
-        int x3 = s%10; s/=10;
-        int x2 = s%10; s/=10;
-        int x1 = s%10; s/=10;
-
-        int n1 = go(x2, x1, x3, x4, x5, x6, x7, x8, x9);
-        int n2 = go(x1, x3, x2, x4, x5, x6, x7, x8, x9);
-        int n3 = go(x1, x2, x3, x5, x4, x6, x7, x8, x9);
-        int n4 = go(x1, x2, x3, x4, x6, x5, x7, x8, x9);
-        int n5 = go(x1, x2, x3, x4, x5, x6, x8, x7, x9);
-        int n6 = go(x1, x2, x3, x4, x5, x6, x7, x9, x8);
-        int n7 = go(x4, x2, x3, x1, x5, x6, x7, x8, x9);
-        int n8 = go(x1, x2, x3, x7, x5, x6, x4, x8, x9);
-        int n9 = go(x1, x5, x3, x4, x2, x6, x7, x8, x9);
-        int n10 = go(x1, x2, x3, x4, x8, x6, x7, x5, x9);
-        int n11 = go(x1, x2, x6, x4, x5, x3, x7, x8, x9);
-        int n12 = go(x1, x2, x3, x4, x5, x9, x7, x8, x6);
-        if (!vis.count(n1)) {
-            q.push({n1, c+1});
-            vis.insert(n1);
-        }
-        if (!vis.count(n2)) {
-            q.push({n2, c+1});
-            vis.insert(n2);
-        }
-        if (!vis.count(n3)) {
-            q.push({n3, c+1});
-            vis.insert(n3);
-        }
-        if (!vis.count(n4)) {
-            q.push({n4, c+1});
-            vis.insert(n4);
-        }
-        if (!vis.count(n5)) {
-            q.push({n5, c+1});
-            vis.insert(n5);
-        }
-        if (!vis.count(n6)) {
-            q.push({n6, c+1});
-            vis.insert(n6);
-        }
-        if (!vis.count(n7)) {
-            q.push({n7, c+1});
-            vis.insert(n7);
-        }
-        if (!vis.count(n8)){
-            q.push({n8, c+1});
-            vis.insert(n8);
-        }
-        if (!vis.count(n9)){
-            q.push({n9, c+1});
-            vis.insert(n9);
-        }
-        if (!vis.count(n10)){
-            q.push({n10, c+1});
-            vis.insert(n10);
-        }
-        if (!vis.count(n11)){
-            q.push({n11, c+1});
-            vis.insert(n11);
-        }
-        if (!vis.count(n12)){
-            q.push({n12, c+1}); 
-            vis.insert(n12)  ;     
-        }
-    }   
+ 
+int v(int atual, int pos) {
+	if (pos >= 6) return 0;
+	int ini = atual;
+	int p0, p1, cnt = 0;
+	while (cnt <= pos+2) {
+		if (cnt == pos) p0 = atual % 9;
+		atual /= 9;
+		cnt++;
+	}
+	p1 = atual % 9;
+	return ini - pwr[pos] * p0 - pwr[pos+3] * p1 + pwr[pos] * p1 + pwr[pos+3] * p0;
+}
+ 
+int main () { _
+	pwr[0] = 1;
+	for (int i = 1; i < 10; i++) pwr[i] = 9 * pwr[i-1];
+	int start = 0, aux, meta = 0;
+	for (int i = 0; i < 9; i++) {
+		cin >> aux;
+		start += pwr[i] * (aux % 9);
+		meta += pwr[i] * ((i+1) % 9);
+	}
+	v(start, 5);
+	queue<pii> fila;
+	fila.push({start, 0});
+	vis[0] = 1;
+	vis[start] = 1;
+	int ans = -1, hor, ver;
+	while (!fila.empty()) {
+		pii atual = fila.front();
+		fila.pop();
+		if (atual.F == meta) {
+			ans = atual.S;
+			break;
+		}
+		for (int i = 0; i < 8; i++) {
+			hor = h(atual.F, i), ver = v(atual.F, i);
+			if (!vis[hor]) {
+				vis[hor] = 1;
+				fila.push({hor, atual.S+1});
+			}
+			if (!vis[ver]) {
+				vis[ver] = 1;
+				fila.push({ver, atual.S+1});
+			}
+		}
+	}
+	cout << ans << '\n';
+    return 0;
 }

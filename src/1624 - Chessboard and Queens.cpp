@@ -1,27 +1,59 @@
 /*
 Problem Name: Chessboard and Queens
 Problem Link: https://cses.fi/problemset/task/1624
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 1000005
+ 
 using namespace std;
-#define rep(i,a,b) for (int i=a;i<b;i++)
-char chess[8][8];
-int c=0;
-bool ld[15], rd[15], row[7];
-void rec(int j){
-	if (j==8) {c++; return;}
-	rep(i,0,8){
-		if (chess[i][j]=='.' && ld[i-j+7]==0 && rd[i+j]==0 && row[i]==0){
-			ld[i-j+7]=1, rd[i+j]=1, row[i]=1;
-			rec(j+1);
-			ld[i-j+7]=0, rd[i+j]=0, row[i]=0;
-		}
-	}
+typedef long long int lli;
+ 
+const int mod = 1e9 + 7;
+const int n_q = 8;
+ 
+bool m[n_q][n_q];
+ 
+int queen(int n) {
+    if (n == n_q) return 1;
+    int resp = 0;
+    bool aux[n_q][n_q];
+    for (int i = 0; i < n_q; i++) {
+        for (int j = 0; j < n_q; j++) {
+            aux[i][j] = m[i][j];
+        }
+    }
+    int i = n;
+    for (int j = 0; j < n_q; j++) {
+        if (m[i][j]) {
+            for (int k = 0; k < n_q; k++) {
+                m[i][k] = m[k][j] = false;
+                for (int l = 0; l < n_q; l++) {
+                    if ((i-j) == (k-l) or (i+j) == (k+l)) m[k][l] = false;
+                }
+            }
+            resp += queen(n+1);
+            for (int k = 0; k < n_q; k++) {
+                for (int l = 0; l < n_q; l++) {
+                    m[k][l] = aux[k][l];
+                }
+            }
+        }
+    }
+    return resp;
 }
-int main(){
-	rep(i,0,8)rep(j,0,8)cin>>chess[i][j];
-	rec(0);
-	cout<<c;
+ 
+int main () { _
+    char c;
+    for (int i = 0; i < n_q; i++) {
+        for (int j = 0; j < n_q; j++) {
+            cin >> c;
+            if (c == '*') m[i][j] = false;
+            else m[i][j] = true;
+        }
+    }
+    cout << queen(0) << endl;
+    return 0;
 }

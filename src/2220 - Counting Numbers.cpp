@@ -1,60 +1,63 @@
 /*
 Problem Name: Counting Numbers
 Problem Link: https://cses.fi/problemset/task/2220
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-int xpow(int x, unsigned int y){
-    int res=1;
-    while(y>0){
-        if (y&1) res= (res*x); y=y>>1; x=(x*x);
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+char cnum[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+string a, b;
+ll dp[20][11][2][2][2];
+// pos na string, ultimo digito, flag de ultrapassar, flag pra qual string estamos vendo, flag pra se ja teve num > 0
+ 
+ll count(int pos, int ult, bool flag, bool pri, bool ja) {
+    ll &resp = dp[pos][ult][flag][pri][ja];
+    if (resp >= 0) return resp;
+    if ((pri ? pos == (int)a.size() : pos == (int)b.size())) return 1ll;
+    ll ans = 0;
+    if (pri) {
+        for (int i = 0; i < 10; i++) {
+            if (cnum[i] > a[pos] && flag) break;
+            if (cnum[i] == a[pos] && i != ult) {
+                ans += count(pos+1, (!i && !ja ? 10 : i), flag, pri, (!i ? ja : true));
+            }
+            else if ((cnum[i] < a[pos] || !flag) && i != ult) {
+                ans += count(pos+1, (!i && !ja ? 10 : i), false, pri, (!i ? ja : true));
+            }
+        }
     }
-    return res;
+    else {
+        for (int i = 0; i < 10; i++) {
+            if (cnum[i] > b[pos] && flag) break;
+            if (cnum[i] == b[pos] && i != ult) {
+                ans += count(pos+1, (!i && !ja ? 10 : i), flag, pri, (!i ? ja : true));
+            }
+            else if ((cnum[i] < b[pos] || !flag) && i != ult) {
+                ans += count(pos+1, (!i && !ja ? 10 : i), false, pri, (!i ? ja : true));
+            }
+        }
+    }
+    return resp = ans;
 }
-
-int solve(int x) {
-	if (x < 0) return 0;
-	if (x == 0) return 1;
-	int flag = 1;
-	while(flag) {
-		flag = 0;
-		for (int i = log10(x) - 1; i >= 0; i--) {
-			int m = xpow(10, i);
-			if (x/(m*10)%10 == x/m%10) {
-				x = (x/m - 1)*m + (m-1);
-				flag = 1;
-			}
-		}
-	}
-	int n = log10(x)+1;
-	int dp[n+1][2] = {0}; //dp[n][0] = free, dp[n][1] = contrained
-	dp[0][0] = 1, dp[0][1] = 1;
-	int ans = 1;
-	int m = 1;
-	for (int i = 1; i < n; i++, m *= 10) {
-		dp[i][0] = xpow(9, i);
-		dp[i][1] = (x/m%10)*dp[i-1][0] + dp[i-1][1];
-		if (x/m%10 > x/(m*10)%10) dp[i][1] -= dp[i-1][0];
-		ans += dp[i][0];
-	}
-	dp[n][1] = (x/m%10 - 1)*dp[n-1][0] + dp[n-1][1];
-   	return ans + dp[n][1];
-   	
-}
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int x, y; cin>>x>>y;
-    cout<<solve(y) - solve(x-1);
-    
+ 
+int main () { _
+    ll c;
+    memset(dp, -1, sizeof(dp));
+    cin >> c >> b;
+    c--;
+    a = to_string(c);
+    ll ans = count(0, 10, true, false, false) - (c >= 0 ? count(0, 10, true, true, false) : 0ll);
+    cout << ans << '\n';
+    return 0;
 }

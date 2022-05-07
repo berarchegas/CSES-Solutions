@@ -1,48 +1,40 @@
 /*
 Problem Name: Advertisement
 Problem Link: https://cses.fi/problemset/task/1142
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    int pre[n] = {0}, suf[n+1] = {0}, a[n];
-    int ans = 0;
-    stack<pair<int, int>> q;
-    for (int i = 0; i < n; i++) {
-        cin>>a[i];
-        while(!q.empty() && q.top().first >= a[i])
-            q.pop();
-        int x = -1;
-        if (!q.empty()) {
-            x = q.top().second;
-        }
-        pre[i] = 1 + i-x-1;
-        q.push({a[i], i});
-    }
-    while(!q.empty()) q.pop();
-
-    for (int i = n-1; i >= 0; i--) {
-        while(!q.empty() && q.top().first >= a[i])
-            q.pop();
-        int x = n;
-        if (!q.empty()) {
-            x = q.top().second;
-        }
-        suf[i] = 1 + x-i-1;
-        q.push({a[i], i});
-        ans = max(ans, (pre[i]+suf[i]-1)*a[i]);
-    }
-    cout<<ans;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 998244353;
+ 
+int v[MAXN];
+ 
+int main () { _
+	int n;
+	cin >> n;
+	for (int i = 1; i <= n; i++) cin >> v[i];
+	v[n+1] = 0;
+	vector<pii> sk;
+	sk.pb({v[1], 1});
+	ll ans = 0;
+	for (int i = 2; i <= n+1; i++) {
+		while (!sk.empty() && sk.back().F >= v[i]) {
+			ans = max(ans, 1ll * (i-1 - ((int)sk.size() == 1 ? 0 : sk[(int)sk.size()-2].S)) * sk.back().F);
+			sk.pop_back();
+		}
+		sk.pb({v[i], i});
+	}
+	cout << ans << '\n';
+    return 0;
 }

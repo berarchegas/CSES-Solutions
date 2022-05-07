@@ -1,51 +1,55 @@
 /*
 Problem Name: Book Shop II
 Problem Link: https://cses.fi/problemset/task/1159
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-int dp[100005];
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+ 
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+ 
+const int MOD = 1e9 + 7;
+const int MAXN = 1e5 + 5;
+const ll INF = 1e18;
+ 
+int cop[MAXN], pr[MAXN], pg[MAXN], dp[MAXN];
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n, x;
+    cin >> n >> x;
+    for (int i = 0; i < n; i++) 
+        cin >> pr[i];
+    for (int i = 0; i < n; i++) 
+        cin >> pg[i];  
     
-    int n, x; cin>>n>>x;
-    vector<int> cost;
-    vector<int> val;
-    int a[n], b[n], c[n];
-    for (int i = 0; i < n; i++)
-        cin>>a[i];
-    for (int i = 0; i < n; i++)
-        cin>>c[i];
-    // conversion to 0-1 knapsack
+    vector<int> pages, price;
     for (int i = 0; i < n; i++) {
-        cin>>b[i];
-        int x = 1;
-        while(b[i] - x >=0) {
-            cost.push_back(x*a[i]);
-            val.push_back(x*c[i]);
-            b[i] -= x;
-            x*=2;
+        cin >> cop[i];
+        int tot = 0;
+        for (int j = 0; j < 10; j++) {
+            if (cop[i] >= (1 << (j+1))) {
+                pages.push_back(pg[i] * (1<<j));
+                price.push_back(pr[i] * (1<<j));
+                tot += (1<<j);
+            }
         }
-        if (b[i]) {
-            cost.push_back(b[i]*a[i]);
-            val.push_back(b[i]*c[i]);
+        pages.push_back(pg[i] * (cop[i] - tot));
+        price.push_back(pr[i] * (cop[i] - tot));
+    }
+    int m = (int)pages.size();
+    for (int i = 0; i < m; i++) {
+        for (int j = x; j >= price[i]; j--) {
+            dp[j] = max(dp[j-price[i]] + pages[i], dp[j]);
         }
     }
-    n = cost.size();
-    for (int i = 0; i < n; i++) {
-        for (int j = x; j >0; j--) {
-            if (j >= cost[i])
-                dp[j] = max(dp[j], val[i] + dp[j-cost[i]]);
-        }
-    }
-    cout<<dp[x];
+    int ans = 0;
+    for (int i = 0; i <= x; i++) ans = max(ans, dp[i]);
+    cout << ans << '\n';
+    return 0;
 }

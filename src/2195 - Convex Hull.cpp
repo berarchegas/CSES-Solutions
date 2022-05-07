@@ -1,71 +1,55 @@
 /*
 Problem Name: Convex Hull
 Problem Link: https://cses.fi/problemset/task/2195
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 2000100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-#define P complex<int>
-#define X real()
-#define Y imag()
-
-int cross(P &a, P &b, P &c) {
-    P u = c - b;
-    P v = a - b;
-    int cp = (conj(u) * v).Y;
-    return (cp > 0) - (cp < 0);
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+ll cross(pll a, pll b, pll c, pll d) {
+	return (a.F - b.F) * (c.S - d.S) - (a.S - b.S) * (c.F - d.F);
 }
-
-vector<P> hull(vector<P> &v) {
-    vector<P> ans = {v[0]};
-    for (int i = 1; i < v.size(); i++) {
-        while (ans.size() > 1) {
-            P b = ans.back();
-            ans.pop_back();
-            P a = ans.back();
-            P c = v[i];
-            if (cross(a, b, c) != 1) {
-                ans.push_back(b);
-                break;
-            }
-        }
-        ans.push_back(v[i]);
-    }
-    return ans;
+ 
+void CH(vector<pll> &v) {
+	 int n = (int) v.size(), k = 0;
+	vector<pll> h(2 * n);
+	sort(v.begin(), v.end());
+	// lower hull
+	for (int i = 0; i < n; i++) {
+		while (k >= 2 && cross(h[k - 1], h[k - 2], v[i], h[k - 2]) < 0) k--;
+		h[k++] = v[i];
+	}
+	// upper hull
+	for (int i = n - 2, t = k + 1; i >= 0; i--) {
+		while (k >= t && cross(h[k - 1], h[k - 2], v[i], h[k - 2]) < 0) {
+			k--;
+		}
+		h[k++] = v[i];
+	}
+	reverse(h.begin(), h.begin() + k);
+	h.resize(k - 1);
+	v = h;
 }
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin >> n;
-    vector<P> v(n);
-    for (int i = 0; i < n; i++) {
-        int x, y; cin >> x >> y;
-        v[i] = {x, y};
-    }
-    sort(v.begin(), v.end(), 
-         [] (const P &a, const P &b) {
-                return (a.X == b.X) ? (a.Y < b.Y) : (a.X < b.X);
-        });
-    vector<P> v1 = hull(v);
-
-    sort(v.begin(), v.end(),
-         [] (const P &a, const P &b) {
-                return (a.X == b.X) ? (a.Y > b.Y) : (a.X > b.X);
-        });
-    vector<P> v2 = hull(v);
-    for (int i = 1; i < v2.size(); i++) {
-        if (v2[i] == v1[0]) break;
-        v1.push_back(v2[i]);
-    }
-    cout << v1.size() << endl;
-    for (auto i: v1)
-        cout << i.X << " " << i.Y << endl;
+ 
+int main () { _
+	int n;
+	cin >> n;
+	vector<pll> v(n);
+	for (int i = 0; i < n; i++) cin >> v[i].F >> v[i].S;
+	CH(v);
+	cout << v.size() << '\n';
+	for (auto a : v) cout << a.F << ' ' << a.S << '\n';
+    return 0;
 }

@@ -1,47 +1,48 @@
 /*
 Problem Name: Bracket Sequences I
 Problem Link: https://cses.fi/problemset/task/2064
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int md = 1e9+7;
-int exp(int x, int y, int md){
-    int ans = 1;
-    x = x%md;
-    while (y > 0) {
-        if (y&1)
-            ans = ans*x%md;
-        y = y>>1;
-        x = x*x%md;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+vector<int> fat(2, 1);
+ 
+int fexp(ll b, int e) {
+    ll resp = 1;
+    while(e) {
+        if(e&1) resp = (resp * b) % M;
+        b = (b*b) % M;
+        e = (e>>1);
     }
-    return ans;
+    return resp;
 }
-
-const int mxN = 2e6+6;
-int F[mxN], I[mxN];
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    //catalan
-    int n; cin>>n; 
-    if (n&1) return cout<<0, 0;
-    n >>= 1;
-    F[0] = 1, I[0] = 1;
-    for (int i = 1; i < mxN; i++) {
-        F[i] = F[i-1]*i%md;
-        I[i] = exp(F[i], md-2, md);
+ 
+int main () { _
+    int n;
+    ll f = 1;
+    for (int i = 2; i < 3e6; i++) {
+        f = (f*i) % M;
+        fat.pb(f);
     }
-    int ans = F[2*n]*I[n]%md*I[n]%md;
-    ans = ans*exp(n+1, md-2, md)%md;
-    cout<<ans;
+    cin >> n;
+    if (n&1) cout << "0\n";
+    else {
+        n /= 2;
+        ll ans = ((ll)fat[2*n] * fexp(fat[n], M-2)) % M;
+        ans = (ans * fexp(n+1, M-2)) % M;
+        ans = (ans * fexp(fat[n], M-2)) % M;
+        cout << ans << '\n';
+    }
+    return 0;
 }

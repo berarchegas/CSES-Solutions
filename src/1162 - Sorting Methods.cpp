@@ -1,68 +1,75 @@
 /*
 Problem Name: Sorting Methods
 Problem Link: https://cses.fi/problemset/task/1162
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int mxN = 2e5+5;
-int bit[mxN];
-void upd(int k) {
-    for (; k < mxN; k += k&-k)
-        bit[k]++;
-}
-int qry(int k) {
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+ 
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+ 
+const int MOD = 1e9 + 7;
+const int MAXN = 2e5 + 5;
+const ll INF = 1e18;
+ 
+int v[MAXN], a[MAXN], inv[MAXN], vis[MAXN];
+vector<int> adj[MAXN];
+ 
+int sum(int pos) {
     int ans = 0;
-    for (; k > 0; k -= k&-k)
-        ans += bit[k];
+    for (; pos; pos -= (pos & -pos)) ans += a[pos];
     return ans;
 }
-vector<int> adj[mxN];
-int c = 0;
-bool vis[mxN];
-void dfs(int s){
-    if (vis[s]) return;
-    vis[s]=1; c++;
-    for (auto i: adj[s]) dfs(i);
+ 
+void upd(int pos, int val) { for (; pos < MAXN; pos += (pos & -pos)) a[pos] += val; }
+ 
+void dfs(int node) {
+    vis[node] = 1;
+    for (int x : adj[node]) 
+        if (!vis[x]) dfs(x);
 }
-int ind[mxN];
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    int a[n];
-    int ans1 = 0, ans2 = 0, ans3 = n, ans4 = n;
-    int mx = 0;
+ 
+int lis(int n) {
+    vector<int> pilha;
     for (int i = 0; i < n; i++) {
-        cin>>a[i];
-        ans1 += qry(mxN) - qry(a[i]);
-        upd(a[i]);
-        if (i+1 != a[i]) {
-            adj[i+1].push_back(a[i]),
-            adj[a[i]].push_back(i+1);
-        }
-        int it = upper_bound(ind, ind+mx+1, a[i]) - ind;
-        mx = max(mx, it);
-        ind[it] = a[i];
+        auto pos = lower_bound(pilha.begin(), pilha.end(), v[i]);
+        if (pos == pilha.end())
+            pilha.push_back(v[i]);
+        else *pos = v[i];
     }
-    ans3 = n-mx;
+    return pilha.size();
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) cin >> v[i];
+    ll ans1 = 0;
+    int ans2 = n, ans3 = n, ans4 = n;
+    int atual = n;
+    for (int i = n-1; i >= 0; i--) {
+        ans1 += sum(v[i]);
+        upd(v[i], 1);
+        if (v[i] == atual) {
+            atual--;
+            ans4--;
+        }
+        adj[v[i]].push_back(i+1);
+        adj[i+1].push_back(v[i]);
+    }
     for (int i = 1; i <= n; i++) {
         if (!vis[i]) {
-            c = 0; dfs(i);
-            ans2 += c-1;
+            dfs(i);
+            ans2--;
         }
     }
-    for (int i = n-1; i >= 0; i--) {
-        if (a[i] == ans4)
-            ans4--;
-    }
-    cout<<ans1<<' '<<ans2<<' '<<ans3<<' '<<ans4;
+    ans3 -= lis(n);
+    cout << ans1 << ' ' << ans2 << ' ' << ans3 << ' ' << ans4 << '\n';
+    return 0;
 }

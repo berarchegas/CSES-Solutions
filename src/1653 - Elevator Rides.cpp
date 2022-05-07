@@ -1,42 +1,41 @@
 /*
 Problem Name: Elevator Rides
 Problem Link: https://cses.fi/problemset/task/1653
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n, k; cin>>n>>k;
-    int a[n];
-    for (int i = 0; i < n; i++)
-        cin>>a[i];
-    pair<int, int> dp[1<<n];
-    dp[0] = {0, k+1};
-    for (int s = 1; s < (1<<n); s++) {
-        dp[s] = {25, 0};
-        for (int i = 0; i < n; i++) {
-            if (s>>i&1){
-                auto [c, w] = dp[s^(1<<i)];
-                if (w + a[i] > k) {
-                    c++;
-                    w = min(a[i], w);
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int main () { _
+    int n, x;
+    cin >> n >> x;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++) cin >> v[i];
+    vector<pii> dp((1<<21), {n+1, 0});
+    dp[0] = {0, 0};
+    for (int i = 1; i < (1 << n); i++) {
+        for (int j = 0; j < n; j++) {
+            if (i & (1<<j)) {
+                pii next = dp[i ^(1<<j)];
+                if (next.S + v[j] > x) {
+                    next.F++;
+                    next.S = v[j];
                 }
-                else
-                    w += a[i];
-                dp[s] = min(dp[s], {c, w});
+                else next.S += v[j];
+                dp[i] = min(dp[i], next);
             }
         }
-        // cerr<<s<<' '<<dp[s].first<<' '<<dp[s].second<<endl;
     }
-    cout<<dp[(1<<n)-1].first;
+    cout << dp[(1<<n)-1].F + (dp[(1<<n)-1].S >= 0) << '\n'; 
+    return 0;
 }

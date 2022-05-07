@@ -1,73 +1,97 @@
 /*
 Problem Name: Range Queries and Copies
 Problem Link: https://cses.fi/problemset/task/1737
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-//persistent segment tree
-
-int cur = 1, n, q;
-vector<int> ver;
-const int mxN = 2e5;
-struct node {
-    int left, right, sum;
-} seg[mxN*40];
-
-void update(int &root, int idx, int val, int l = 0, int h = n-1) {
-    seg[cur].left = seg[root].left;
-    seg[cur].right = seg[root].right;
-    seg[cur].sum = seg[root].sum + val;
-    root = cur; cur++;
-    int mid = (l+h)/2;
-    if (l == h)
-        return;
-    if (idx <= mid)
-        update(seg[root].left, idx, val, l, mid);
-    else
-        update(seg[root].right, idx, val, mid+1, h);
-}
-
-int query(int root, int a, int b, int l = 0, int h = n-1) {
-    if (a<=l && h<=b)
-        return seg[root].sum;
-    int mid = (l+h)/2;
-    return (a<=mid?query(seg[root].left, a, b, l, mid):0) +
-           (mid<b?query(seg[root].right, a, b, mid+1, h):0);
-}
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    cin>>n>>q;
-    ver.push_back(0);
-    for (int i = 0; i < n; i++) {
-        int x; cin>>x;
-        update(ver[0], i, x);
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+ 
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+ 
+const int MOD = 1e9 + 7;
+const int MAXN = 5e6 + 5;
+const ll INF = 2e18;
+ 
+ll esq[MAXN], dir[MAXN], a[MAXN];
+int raiz[(int)2e5 + 5], v[(int)2e5 + 5], disp = 0, lst = 2;
+ 
+void build(int node, int i, int j) {
+    if (i == j) {
+        a[node] = v[i];
+        disp = max((int)disp, node);
     }
-    while(q--) {
-        int ch; cin>>ch;
-        if (ch == 1) {
-            int k, a, x; cin>>k>>a>>x;
-            k--, a--;
-            update(ver[k], a, x - query(ver[k], a, a));
-        }
-        else if (ch == 2) {
-            int k, a, b; cin>>k>>a>>b;
-            k--, a--, b--;
-            cout<<query(ver[k], a, b)<<endl;
-        }
-        else {
-            int k; cin>>k;
-            ver.push_back(ver[k-1]);
+    else {
+        int m = (i + j) / 2;
+        build(2 * node, i, m);
+        build(2 * node + 1, m + 1, j);
+        esq[node] = 2 * node;
+        dir[node] = 2 * node + 1;
+        a[node] = a[2 * node] + a[2 * node + 1];
+    }
+}
+ 
+ll query(int node, int i, int j, int ini, int fim) {
+    if (i > fim || j < ini) return 0;
+    else if (ini <= i && j <= fim) return a[node];
+    else {
+        int m = (i + j) / 2;
+        return query(esq[node], i, m, ini, fim) + query(dir[node], m + 1, j, ini, fim);
+    }
+}
+ 
+int upd(int node, int i, int j, int pos, int val) {
+    int novo = disp++;
+    if (i == j) {
+        a[novo] = val;
+        return novo;
+    }
+    int m = (i + j) / 2;
+    if (m >= pos) {
+        esq[novo] = upd(esq[node], i, m, pos, val);
+        dir[novo] = dir[node];
+    }
+    else {
+        dir[novo] = upd(dir[node], m + 1, j, pos, val);
+        esq[novo] = esq[node];
+    }
+    a[novo] = a[esq[novo]] + a[dir[novo]];
+    return novo;
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+	int n, q;
+    cin >> n >> q;
+    for (int i = 1; i <= n; i++) cin >> v[i];
+    raiz[1] = 1;
+    build(1, 1, n);
+    disp++;
+    int tipo, ar, x, y;
+    for (int i = 0; i < q; i++) {
+        cin >> tipo;
+        switch(tipo) {
+            case 1:
+                cin >> ar >> x >> y;
+                raiz[ar] = upd(raiz[ar], 1, n, x, y);
+                break;
+            case 2:
+                cin >> ar >> x >> y;
+                cout << query(raiz[ar], 1, n, x, y) << '\n';
+                break;
+            case 3:
+                cin >> ar;
+                raiz[lst++] = disp;
+                esq[disp] = esq[raiz[ar]];
+                dir[disp] = dir[raiz[ar]];
+                a[disp] = a[esq[disp]] + a[dir[disp]];
+                disp++;
+                break;
         }
     }
-
+    return 0;
 }

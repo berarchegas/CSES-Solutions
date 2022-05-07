@@ -1,54 +1,45 @@
 /*
 Problem Name: Inversion Probability
 Problem Link: https://cses.fi/problemset/task/1728
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
-
-template<typename... T>
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-
-#define int long long
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 100000000
 #define pb push_back
 #define F first
 #define S second
-
-const int inf = 1LL<<62;
-const int md = 1000000007;
-
-void solve(){
-    int n, r[105];
-    long double p[105][105] = {0};
-    cin>>n;
-    for (int i = 0; i < n; i++) {
-        cin>>r[i];
-    }
-    long double ans = 0;
-    for (int i = 0; i < n; i++) {
-        for ( int j = i + 1; j < n; j++) {
-            for (int k = 1; k <= r[i]; k++) {
-                p[i][j] += 1.0/r[i]*(((k - 1) >= r[j])?1.0:(k-1.0)/r[j]);
-            }
-            ans += p[i][j];
-        }
-    }
-    cout<<setprecision(6)<<fixed;
-    cout<<ans;
-}     
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    for (int i = 1; i <= t; i++) {
-        solve();
-        cout<<'\n';
-    }
+ 
+using namespace std;
+typedef long long ll;
+typedef pair<int, int> pii;
+const int M = 1e9 + 7;
+ 
+int main () { _
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	for (int i = 0; i < n; i++) cin >> v[i];
+	vector<vector<double>> dp(105, vector<double> (105));
+	vector<double> prob(105);
+	for (int i = 1; i < v[0]; i++) {
+		prob[i] += ((double)v[0] - i) / v[0];
+	}
+	for (int i = 1; i < n; i++) {
+		for (int j = 1; j <= v[i]; j++) {
+			dp[i][j] = prob[j];
+			for (int k = 1; k <= v[i-1]; k++) {
+				dp[i][j] += (dp[i-1][k]) / v[i-1];
+			}
+		}
+		for (int j = 1; j < v[i]; j++) {
+			prob[j] += ((double)v[i] - j) / v[i];
+		}
+	}
+	double ans = 0;
+	for (int i = 1; i <= v[n-1]; i++) ans += dp[n-1][i];
+	cout << setprecision(6) << fixed;
+	cout << ans / v[n-1] << '\n';
+	return 0;
 }

@@ -1,54 +1,41 @@
 /*
 Problem Name: Counting Grids
 Problem Link: https://cses.fi/problemset/task/2210
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int md = 1e9+7;
-
-int exp(int x, int y, int md){
-    int ans = 1;
-    x = x%md;
-    while (y > 0) {
-        if (y&1)
-            ans = ans*x%md;
-        y = y>>1;
-        x = x*x%md;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+ll fexp(ll b, int e) {
+    ll resp = 1;
+    while(e) {
+        if(e&1) resp = (resp * b) % M;
+        b = (b*b) % M;
+        e = (e>>1);
     }
-    return ans;
+    return resp;
 }
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    //burnside's lemma: https://youtu.be/D0d9bYZ_qDY
-    //no. of objects = avg. no of symmetrical pictures over all symmetries.
-    int n0 = n*n;
-    int n90 = 1;
-    int n180 = 1;
-    if (n > 1 && (n&1)) {
-        n90 = (n+3)*(n-1)/4 - (n-1)/2 + 1;
-        n180 = (n+3)*(n-1)/2 - (n-1) + 1;
+ 
+int main () { _
+    ll n;
+    cin >> n;
+    if (n == 1) cout << "2\n";
+    else {
+        ll total = (n*n);
+        ll ans = fexp(2, total % (M-1));
+        ans += 2*fexp(2, (total/4 + (n&1)) % (M-1));
+        ans += fexp(2, (total/2 + (n&1)) % (M-1));
+        cout << (ans * fexp(4, M-2)) % M << '\n';
     }
-    else if (n&1^1) {
-        n90 = n*(n+2)/4 - n/2;
-        n180 = n*(n+2)/2 - n;
-    }
-    int ans = 0;
-    ans = (ans + exp(2, n0, md)) % md; //0 deg
-    ans = (ans + exp(2, n90, md)) % md; //90 deg
-    ans = (ans + exp(2, n180, md)) % md; //180 deg
-    ans = (ans + exp(2, n90, md)) % md; //270 deg
-    ans = ans * exp(4, md-2, md) % md;
-    cout<<ans;
+    return 0;
 }

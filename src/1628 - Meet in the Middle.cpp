@@ -1,64 +1,53 @@
 /*
 Problem Name: Meet in the Middle
 Problem Link: https://cses.fi/problemset/task/1628
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1010
+#define INF 1e17
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-struct custom_hash {
-    static uint64_t splitmix64(uint64_t x) {
-        // http://xorshift.di.unimi.it/splitmix64.c
-        x += 0x9e3779b97f4a7c15;
-        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
-        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
-        return x ^ (x >> 31);
-    }
-
-    size_t operator()(uint64_t x) const {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(x + FIXED_RANDOM);
-    }
-};
-unordered_map<int,int, custom_hash> mp;
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n, k; cin>>n>>k;
-    vector<int> v1, v2;
-    for (int i = 0; i < n/2; i++) {
-        int x; cin>>x;
-        v1.push_back(x);
-    }
-    for (int i = n/2; i < n; i++) {
-        int x; cin>>x;
-        v2.push_back(x);
-    }
-    int n1 = n/2;
-    int n2 = n - n/2;
-    for (int i = 0; i < (1<<n1); i++) {
-        int x = 0, y = 0, st = i;
-        while(st > 0) {
-            if (st&1) x += v1[y];
-            y++; st>>=1;
-        }
-        mp[x]++;
-    }
-    int ans = 0;
-    for (int i = 0; i < (1<<n2); i++) {
-        int x = 0, y = 0, st = i;
-        while(st > 0) {
-            if (st&1) x+= v2[y];
-            y++; st>>=1;
-        }
-        if (mp.count(k-x)) ans += mp[k-x];
-    }
-    cout<<ans;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 998244353;
+ 
+int main () { _
+	int n, x, aux;
+	cin >> n >> x;
+	vector<int> v1, v2;
+	for (int i = 0; i < n/2; i++) {
+		cin >> aux;
+		v1.pb(aux);
+	} 
+	for (int i = n/2; i < n; i++) {
+		cin >> aux;
+		v2.pb(aux);
+	}
+	int tam1 = n/2, tam2 = (n+1)/2, tam;
+	vector<ll> resp1(1), resp2(1);
+	for (int i = 0; i < tam1; i++) {
+		tam = (int)resp1.size();
+		for (int j = 0; j < tam; j++) resp1.pb(resp1[j] + v1[i]);
+	}
+	for (int i = 0; i < tam2; i++) {
+		tam = (int)resp2.size();
+		for (int j = 0; j < tam; j++) resp2.pb(resp2[j] + v2[i]);
+	}
+	sort(resp1.begin(), resp1.end());
+	sort(resp2.begin(), resp2.end());
+	ll ans = 0;
+	for (ll a : resp1) {
+		if (a > x) break;
+		ll look = x-a;
+		ans -= lower_bound(resp2.begin(), resp2.end(), look) - upper_bound(resp2.begin(), resp2.end(), look);
+	}
+	cout << ans << '\n';
+	return 0;
 }

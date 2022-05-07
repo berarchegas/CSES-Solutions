@@ -1,46 +1,47 @@
 /*
 Problem Name: Knuth Division
 Problem Link: https://cses.fi/problemset/task/2088
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int mxN = 5e3+5;
-pair<int, int> dp[mxN][mxN];
-int pre[mxN];
-const int INF = 1LL<<60;
-
-signed main(){
-    cin.tie(0)->sync_with_stdio(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-
-    int n; cin >> n;
-    for (int i = 1, x; i <= n; i++) {
-        cin >> x;
-        pre[i] = pre[i-1] + x;
-    }
-    for (int i = 1; i < n; i++) {
-        dp[i][i+1] = {pre[i+1] - pre[i-1], i};
-    }
-
-    for (int k = 3; k <= n; k++) {
-        for (int i = 1; i+k-1 <= n; i++) {
-            int j = i+k-1;
-            pair<int, int> p = {dp[i][j-1].second, dp[i+1][j].second};
-            dp[i][j] = {INF, -1};
-            for (int x = p.first; x <= p.second; x++) {
-                dp[i][j] = min(dp[i][j], {dp[i][x].first + dp[x+1][j].first, x});
-            }
-            dp[i][j].first += pre[j] - pre[i-1];
-        }
-    }
-    cout << dp[1][n].first;
-    
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 998244353;
+ 
+int v[5050], pos[5050][5050];
+ll dp[5050][5050], pre[5050];
+ 
+int main () { _
+	int n;
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		cin >> v[i];
+		pre[i] = pre[i-1] + v[i];
+		pos[i][i] = i;
+	}
+	for (int tam = 1; tam < n; tam++) {
+		for (int i = 1; i+tam <= n; i++) {
+			int j = i+tam;
+			dp[i][j] = dp[i][pos[i][j-1]] + dp[pos[i][j-1]+1][j] + pre[j] - pre[i-1];
+			pos[i][j] = pos[i][j-1];
+			for (int k = pos[i][j]+1; k <= pos[i+1][j]; k++) {
+				if (dp[i][k] + dp[k+1][j] + pre[j] - pre[i-1] < dp[i][j]) {
+					dp[i][j] = dp[i][k] + dp[k+1][j] + pre[j] - pre[i-1];
+					pos[i][j] = k;
+				}
+			}
+		} 
+	}
+	cout << dp[1][n] << '\n';
+    return 0;
 }

@@ -1,49 +1,58 @@
 /*
 Problem Name: Counting Tilings
 Problem Link: https://cses.fi/problemset/task/2181
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-int dp[1003][1030], n,m;
-const int md = 1e9+7;
-
-void solve(int x = 0, int y = 0, int mask = 0, int next_mask = 0) {
-    if (x == n)
-        return;
-    if (y >= m)
-        (dp[x+1][next_mask] += dp[x][mask])%=md;
-    else
-    {
-        int my_mask = 1 << y;
-        if (mask & my_mask)
-            solve (x, y+1, mask, next_mask);
-        else
-        {
-            solve (x, y+1, mask, next_mask | my_mask);
-            if (y+1 < m && ! (mask & (my_mask << 1)))
-                solve (x, y+2, mask, next_mask);
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int main () { _
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> v((1<<n)+2);
+    vector<vector<int>> dp(1010, vector<int> (1<<(n+1)));
+    for (int i = 0; i < (1<<n); i++) {
+        for (int j = 0; j < (1<<n); j++) {
+            int count = 0;
+            bool valid = true;
+            for (int k = 0; k < n; k++) {
+                if ((i & (1<<k))) {
+                    if ((j & (1<<k))) valid = false;
+                    valid &= !(count&1);
+                    count = 0;
+                }
+                else if (j & (1<<k)) {
+                    valid &= !(count&1);
+                    count = 0;
+                }
+                else count++;
+            }
+            valid &= !(count&1);
+            if (valid) v[i].pb(j);
         }
     }
-}
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    cin>>m>>n;
-    dp[0][0] = 1;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < (1<<m); j++) {
-			solve(i, 0, j, 0);
-		}
-	}    
-	cout<<dp[n][0];
+    for (int i = 0; i < (int)v[0].size(); i++) {
+        dp[1][v[0][i]] = 1;
+    }
+    for (int i = 2; i <= m; i++) {
+        for (int j = 0; j < (1<<n); j++) {
+            for (int k = 0; k < (int)v[j].size(); k++) {
+                int l = v[j][k];
+                dp[i][j] += dp[i-1][l];
+                if (dp[i][j] >= M) dp[i][j] -= M;
+            }
+        }
+    }
+    cout << dp[m][0] << '\n';
+    return 0;
 }

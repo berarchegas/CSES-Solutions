@@ -1,53 +1,37 @@
 /*
 Problem Name: Counting Towers
 Problem Link: https://cses.fi/problemset/task/2413
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-const int mxN = 1e6+6;
-int dp[mxN][3];
-
-const int md = 1e9+7;
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-                                   
-    //                                      _  _
-    // dp[i][1] = last blocks are separate | || |
-    //                                   _ _
-    // dp[i][2] = last blocks are fused |   |
-    
-    // transition:
-    //              _  _    _  _    _  _    _  _     _ _
-    //  _  _       | || |  |_|| |  | ||_|  |_||_|   |_ _|
-    // | || | =>   | || |, | || |, | || |, | || |,  | | |
-    //              _ _    _ _    _ _ 
-    //  _ _        |   |  |_|_|  |_ _|
-    // |   |  =>   |   |, |   |, |   |
-
-    // dp[i][1] = dp[i-1][1]*4 + dp[i-1][2]
-    // dp[i][2] = dp[i-1][1] + dp[i-1][2]*2
-
-
-    dp[1][1] = dp[1][2] = 1;
-    for (int i = 2; i < mxN; i++) {
-        dp[i][1] = (dp[i-1][1]*4%md + dp[i-1][2])%md;
-        dp[i][2] = (dp[i-1][1] + dp[i-1][2]*2%md)%md;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int main () { _
+    int t;
+    cin >> t;
+    vector<vector<ll>> dp(1e6+5, vector<ll> (5));
+    dp[1][0] = 2, dp[1][1] = dp[1][2] = dp[1][3] = dp[1][4] = 1;
+    for (int i = 1; i <= 1e6; i++) {
+        dp[i+1][0] = (2*dp[i][0] + dp[i][1] + dp[i][2] + dp[i][3] + dp[i][4]) % M;
+        dp[i+1][1] = (dp[i][0] + dp[i][1] + dp[i][2] + dp[i][3]) % M;
+        dp[i+1][2] = dp[i+1][1];
+        dp[i+1][3] = (dp[i][0] + dp[i][1] + dp[i][2] + dp[i][3]) % M;
+        dp[i+1][4] = (dp[i][0] + dp[i][4]) % M;
     }
-
-    int t; cin>>t;
-    while(t--) {
-        int n; cin>>n;
-        cout<<(dp[n][1] + dp[n][2])%md<<endl;
+    while (t--) {
+        int n;
+        cin >> n;
+        cout << dp[n][0] << '\n';
     }
-
+    return 0;
 }

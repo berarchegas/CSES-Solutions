@@ -1,42 +1,48 @@
 /*
 Problem Name: Network Renovation
 Problem Link: https://cses.fi/problemset/task/1704
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
+#include <bits/stdc++.h>
  
-#define int long long
-#define endl '\n'
-
-vector<int> adj[100005]; 
-vector<int> v;
-void dfs(int s, int p) {
-    for (auto i : adj[s]) {
-        if (i != p)
-            dfs(i, s);
-    }
-    if (adj[s].size() == 1) 
-        v.push_back(s);
+using namespace std;
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+ 
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+ 
+const int MOD = 1e9 + 7;
+const int MAXN = 2e5 + 5;
+const ll INF = 1e18;
+ 
+vector<int> v[MAXN], fol;
+ 
+void dfs(int node, int pai) {
+	for (int x : v[node]) {
+		if (x != pai) dfs(x, node);
+	}
+	if ((int)v[node].size() == 1) fol.push_back(node);
 }
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    for (int i = 0; i < n-1; i++) {
-        int x,y; cin>>x>>y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
-    }
-    dfs(1, 0);
-    int k = v.size();
-    if (k&1) 
-        v.push_back(v[0]), k++;
-    cout<< k/2<<endl;
-    for (int i = 0; i < k/2; i++) 
-        cout<<v[i]<<' '<<v[i+k/2]<<endl;
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+	int n;
+	cin >> n;
+	for (int i = 0; i < n-1; i++) {
+		int a, b;
+		cin >> a >> b;
+		v[a].push_back(b);
+		v[b].push_back(a);
+	}
+	dfs(1, 0);
+	// cnt eh o numero de filhos da raiz
+	int tam = (int)fol.size();
+	if (tam&1) fol.push_back(fol[0]), tam++;
+	cout << tam/2 << '\n';
+	for (int i = 0; i < tam/2; i++) {
+		cout << fol[i] << ' ' << fol[i+tam/2] << '\n';
+	}
+    return 0;
 }

@@ -1,55 +1,55 @@
 /*
 Problem Name: Necessary Roads
 Problem Link: https://cses.fi/problemset/task/2076
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
  
-#define int long long
-#define endl '\n'
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
  
-const int mxN = 1e5+5;
-vector<int> adj[mxN];
-vector<pair<int,int>> ans;
-int vis[mxN], low[mxN];
-int cnt = 0;
+const int MOD = 1e9 + 7;
+const int MAXN = 2e5 + 5;
+const ll INF = 1e18;
  
-void dfs(int s, int p) {
-    vis[s] = ++cnt;
-    low[s] = vis[s];
-    for (auto i: adj[s]) {
-        if (i != p) {
-            if (vis[i]) //back edge
-                low[s] = min(low[s], vis[i]);
-            else {
-                dfs(i, s);
-                low[s] = min(low[s], low[i]);
-                if (low[i] > vis[s])
-                    ans.push_back({s, i});
-            }
-        }
-    }
+vector<int> v[MAXN];
+vector<pii> edges;
+int vis[MAXN], dp[MAXN], dep[MAXN];
+ 
+void dfs(int node, int pai) {
+	dep[node] = dep[pai] + 1;
+	vis[node] = 1;
+	for (int x : v[node]) {
+		if (x == pai) continue;
+		if (vis[x]) {
+			if (dep[node] > dep[x]) dp[node]--;
+			else dp[node]++;
+		}
+		else {
+			dfs(x, node);
+			dp[node] += dp[x];
+		}
+	}
+	if (!dp[node] && node > 1) edges.emplace_back(node, pai);
 }
  
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n,m; cin>>n>>m;
-    for (int i = 0; i < m; i++) {
-        int x, y; cin>>x>>y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
-    }
-    for (int i = 1; i <= n; i++) {
-        if (!vis[i])
-            dfs(i, 0);
-    }
-    cout<<ans.size()<<endl;
-    for (auto [i, j]: ans)
-        cout<<i<<' '<<j<<endl;
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+	int n, m;
+	cin >> n >> m;
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		v[a].push_back(b);
+		v[b].push_back(a);
+	}
+	dfs(1, -1);
+	cout << edges.size() << '\n';
+	for (auto x : edges) cout << x.first << ' ' << x.second << '\n';
+    return 0;
 }

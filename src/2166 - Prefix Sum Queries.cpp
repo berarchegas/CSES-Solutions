@@ -1,60 +1,85 @@
 /*
 Problem Name: Prefix Sum Queries
 Problem Link: https://cses.fi/problemset/task/2166
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e18
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-#define lsum first
-#define sum second
-
-
-const int N = 1LL<<19;
-pair<int,int> tree[N];
-
-int n;
-void upd(int k, int x){
-    k+=n;
-    tree[k] = {x, x}; k>>=1;
-    while(k>=1){
-        tree[k].sum = tree[2*k].sum + tree[2*k+1].sum;
-        tree[k].lsum = max(tree[2*k].lsum, tree[2*k].sum + tree[2*k+1].lsum);
-        k>>=1;
-    }
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 998244353;
+ 
+ll a[4*MAXN], lz[4*MAXN], v[MAXN], w[MAXN];
+ 
+void build(int node, int i, int j) {
+	if (i == j) a[node] = w[i];
+	else {
+		int m = (i+j)/2;
+		build(2*node, i, m), build(2*node+1, m+1, j);
+		a[node] = max(a[2*node], a[2*node+1]);
+	}
 }
-int qry(int a, int b){
-    a+=n, b+=n;
-    pair<int, int> x = {0, 0}, y = {0, 0};
-    while(a<=b){
-        if (a&1) 
-            x = {max(x.lsum, x.sum + tree[a].lsum),  x.sum + tree[a++].sum};
-        if (~b&1) 
-            y = {max(tree[b].lsum, tree[b].sum + y.lsum), y.sum + tree[b--].sum}; 
-        a>>=1, b>>=1;
-    }
-    return max(x.lsum, x.sum + y.lsum);
+ 
+void push(int node, int i, int j) {
+	a[node] += lz[node];
+	if (i != j) {
+		lz[2*node] += lz[node];
+		lz[2*node+1] += lz[node];
+	}
+	lz[node] = 0;
 }
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int t; cin>>n>>t;
-    for (int i = 0; i < n; i++) {
-        int x; cin>>x;
-        upd(i, x);
-    }
-    while(t--) {
-        int x, a, b; cin>>x>>a>>b;
-        if (x == 1)
-            upd(a-1, b);
-        else
-            cout<<qry(a-1, b-1)<<endl;
-    }
-    
+ 
+void upd(int node, int i, int j, int ini, int fim, int val) {
+	push(node, i, j);
+	if (j < ini || i > fim) return;
+	if (ini <= i && j <= fim) {
+		lz[node] += val;
+		push(node, i, j);
+	}
+	else {
+		int m = (i+j)/2;
+		upd(2*node, i, m, ini, fim, val);
+		upd(2*node+1, m+1, j, ini, fim, val);
+		a[node] = max(a[2*node], a[2*node+1]);
+	}
+}
+ 
+ll query(int node, int i, int j, int ini, int fim) {
+	push(node, i, j);
+	if (j < ini || i > fim) return -INF;
+	if (ini <= i && j <= fim) return a[node];
+	else {
+		int m = (i+j)/2;
+		return max(query(2*node, i, m, ini, fim), query(2*node+1, m+1, j, ini, fim));
+	}
+}
+ 
+int main () { _
+	int n, q;
+	cin >> n >> q;
+	for (int i = 1; i <= n; i++) {
+		cin >> v[i];
+		w[i] = v[i] + w[i-1];
+	}
+	build(1, 0, n);
+	int tipo, a, b;
+	for (int i = 0; i < q; i++) {
+		cin >> tipo >> a >> b;
+		if (tipo == 1) {
+			upd(1, 0, n, a, n, b - v[a]);
+			v[a] = b;
+		}
+		if (tipo == 2) 
+			cout << max(query(1, 0, n, a, b) - query(1, 0, n, a-1, a-1), 0ll) << '\n';
+	}
+    return 0;
 }

@@ -1,85 +1,64 @@
 /*
 Problem Name: Flight Routes
 Problem Link: https://cses.fi/problemset/task/1196
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
-template<typename... T>
-void see(T&... args) { ((cin >> args), ...);}
-template<typename... T>
-void put(T&&... args) { ((cout << args << " "), ...);}
-template<typename... T>
-void putl(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-#define int long long
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 100100
+#define INF 1e17
 #define pb push_back
 #define F first
 #define S second
-#define ll long long
-#define ull unsigned long long
-#define ld long double
-#define pii pair<int,int>
-#define tiii tuple<int,int,int>
-#define vi vector<int>
-#define vii vector<pii>
-#define vc vector
-#define L cout<<'\n';
-#define E cerr<<'\n';
-#define all(x) x.begin(),x.end()
-#define rep(i,a,b) for (int i=a; i<b; ++i)
-#define rev(i,a,b) for (int i=a; i>b; --i)
-#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-#define setpr(x) cout<<setprecision(x)<<fixed
-#define sz size()
-#define seea(a,x,y) for(int i=x;i<y;i++){cin>>a[i];}
-#define seev(v,n) for(int i=0;i<n;i++){int x; cin>>x; v.push_back(x);}
-#define sees(s,n) for(int i=0;i<n;i++){int x; cin>>x; s.insert(x);}
-const ll inf = 1LL<<62;
-const ld ep = 0.0000001;
-const ld pi = acos(-1.0);
-const ll md = 1000000007;
-
-void solve(){
-    int n,m,k; see(n,m,k);
-    //https://en.wikipedia.org/wiki/K_shortest_path_routing
-    vii adj[n+1];
-    rep(i,0,m){
-        int a,b,w; see(a,b,w);
-        adj[a].pb({b,w});
-    }
-    priority_queue<pii> q;
-    q.push({0,1});
-    int vis[n+1]={0};
-    while(!q.empty() && vis[n]<k){
-        int a = q.top().S;
-        int d = q.top().F;
-        q.pop(); vis[a]++;
-        if (a==n) put(-d);
-        if (vis[a]<=k){
-            for (auto [b,w]: adj[a]){
-                q.push({d-w,b});
-            }
-        }
-    }
-}    
-signed main(){
-    IOS;
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    while(t--){
-        solve();
-        //cout<<'\n';
-    }
-    #ifdef LOCAL
-    clock_t tStart = clock();
-    cerr<<fixed<<setprecision(10)<<"\nTime Taken: "<<(double)(clock()- tStart)/CLOCKS_PER_SEC<<endl;
-    #endif
+ 
+using namespace std;
+typedef long long int ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 998244353;
+ 
+vector<pii> v[MAXN];
+priority_queue<ll> dist[MAXN];
+int n, m, k;
+ 
+void dijkstra() {
+	for (int i = 1; i <= n; i++) {
+		for (int j = 0; j < k; j++) dist[i].push(INF);
+	}
+	dist[1].pop();
+	dist[1].push(0);
+	priority_queue<pll, vector<pll>, greater<pll>> fila;
+	fila.push({0, 1});
+	while (!fila.empty()) {
+		pll atual = fila.top();
+		fila.pop();
+		if (atual.F > dist[atual.S].top()) continue;
+		for (pii x : v[atual.S]) {
+			if (dist[x.F].top() > atual.F + x.S) {
+				dist[x.F].pop();
+				dist[x.F].push(atual.F + x.S);
+				fila.push({atual.F + x.S, x.F});
+			}
+		}
+	}
+}
+ 
+int main() { _
+	cin >> n >> m >> k;
+	for (int i = 0; i < m; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		v[a].pb({b, c});
+	}
+	dijkstra();
+	vector<ll> ans;
+	while (!dist[n].empty()) {
+		ans.pb(dist[n].top());
+		dist[n].pop();
+	}
+	reverse(ans.begin(), ans.end());
+	for (ll x : ans) cout << x << ' ';
+	cout << '\n';
+    return 0;
 }

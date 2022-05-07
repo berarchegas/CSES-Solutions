@@ -1,81 +1,93 @@
 /*
 Problem Name: Tree Isomorphism II
 Problem Link: https://cses.fi/problemset/task/1701
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+    
 using namespace std;
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+    
+mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+    
+const int MOD = 1e9 + 7;
+const int MAXN = 1e5 + 5;
+const ll INF = 2e18;
  
-#define int long long
-#define endl '\n'
+vector<int> v[2][MAXN];
+int id = 0, dp[2][MAXN], n;
+map<vector<int>, int> mp;
  
-vector<int> center(int n, vector<int> adj[]) {
-    int deg[n+1] = {0};
-    vector<int> v;
-    for (int i = 1; i <= n; i++) {
-        deg[i] = adj[i].size();
-        if (deg[i] == 1)
-            v.push_back(i), deg[i]--;
+int dfs(int node, int p, bool at) {
+    dp[at][node] = 1;
+    vector<int> val;
+    for (int x : v[at][node]) {
+        if (x != p) {
+            val.push_back(dfs(x, node, at));
+            dp[at][node] += dp[at][x];
+        }
     }
-    int m = v.size();
-    while(m < n) {
-        vector<int> vv;
-        for (auto i: v) {
-            for (auto j: adj[i]) {
-                deg[j]--;
-                if (deg[j] == 1)
-                    vv.push_back(j);
+    sort(val.begin(), val.end());
+    if (!mp[val]) mp[val] = ++id;
+    return mp[val];
+}
+ 
+void dfs2(int node, int p, int at) {
+    dp[at][node] = 1;
+    for (int x : v[at][node]) {
+        if (x != p) {
+            dfs2(x, node, at);
+            dp[at][node] += dp[at][x];
+        }
+    }
+}
+ 
+vector<int> ctd(int node, int p, bool at) {
+    vector<int> ans;
+    bool ok = true;
+    for (int x : v[at][node]) {
+        if (x != p) {
+            vector<int> a = ctd(x, node, at);
+            for (int x : a) ans.push_back(x);
+            ok &= (dp[at][x] <= (n / 2));
+        }
+    }
+    ok &= (n - dp[at][node] <= (n/2));
+    if (ok) ans.push_back(node);
+    return ans;
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int t;
+    cin >> t;
+    while (t--) {
+        mp.clear();
+        id = 0;
+        int a, b;
+        cin >> n;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 1; j <= n; j++) {
+                dp[i][j] = 0;
+                v[i][j].clear();
+            }
+            for (int j = 0; j < n - 1; j++) {
+                cin >> a >> b;
+                v[i][a].push_back(b);
+                v[i][b].push_back(a);
             }
         }
-        m += vv.size();
-        v = vv;
-    }
-    return v;
-}
-map<vector<int>, int> mp;
-int idx = 0;
-
-int dfs(int s, int p, vector<int> adj[]) {
-    vector<int> v;
-    for (auto i: adj[s]) {
-        if (i != p) 
-            v.push_back(dfs(i, s, adj));
-    }
-    sort(v.begin(), v.end());
-    if (!mp.count(v)) mp[v] = idx++;
-    return mp[v];
-}
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int t; cin>>t;
-    while(t--) {
-        int n; cin>>n;
-        vector<int> adj1[n+1], adj2[n+1];
-        for (int i = 1; i < n; i++) {
-            int x,y; cin>>x>>y;
-            adj1[x].push_back(y);
-            adj1[y].push_back(x);
+        dfs2(1, -1, 0), dfs2(1, -1, 1);
+        vector<int> c0 = ctd(1, -1, 0), c1 = ctd(1, -1, 1);
+        int s0 = dfs(c0[0], -1, 0);
+        bool ok = false;
+        for (int x : c1) {
+            if (dfs(x, -1, 1) == s0) ok = true;
         }
-        for (int i = 1; i < n; i++) {
-            int x,y; cin>>x>>y;
-            adj2[x].push_back(y);
-            adj2[y].push_back(x);
-        }
-        vector<int> v1 = center(n, adj1), v2 = center(n, adj2);
-        int s1 = dfs(v1[0], -1, adj1);
-        int f = 0;
-        for (auto s: v2) {
-            int s2 = dfs(s, -1, adj2);
-            if (s1 == s2)
-                f = 1;
-        }
-        if (f) cout<<"YES";
-        else cout<<"NO";
-        cout<<endl;
+        cout << (ok ? "YES\n" : "NO\n");
     }
+    return 0;
 }

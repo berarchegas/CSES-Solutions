@@ -1,29 +1,33 @@
 /*
 Problem Name: Another Game
 Problem Link: https://cses.fi/problemset/task/2208
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 1000100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int t; cin>>t;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+int main () { _
+    int t;
+    cin >> t;
     while (t--) {
-        int n; cin>>n;
-        int ans = 0;
+        int n, aux;
+        cin >> n;
+        bool ans = false;
         for (int i = 0; i < n; i++) {
-            int x; cin>>x;
-            if (x&1) ans = 1;
+            cin >> aux;
+            ans |= (aux&1);
         }
-        cout<<(ans ? "first" : "second")<<endl;
-    }   
+        cout << (ans ? "first\n" : "second\n");
+    }
+    return 0;
 }

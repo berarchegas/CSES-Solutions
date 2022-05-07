@@ -1,30 +1,40 @@
 /*
 Problem Name: Josephus Problem I
 Problem Link: https://cses.fi/problemset/task/2162
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 300100
+#define INF 100000000
+#define pb push_back
+#define F first
+#define S second
+ 
 using namespace std;
-
-#define int long long
-#define endl '\n'
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    
-    int n; cin>>n;
-    int a = 1, b = 0;
-    while(n > 0) {
-    	for (int i = 2; i <= n; i+=2) {
-    		cout<<a*i + b<<' ';
-    	}
-    	if (n&1) cout<<a + b<<' ', b += a;
-    	else b -= a;
-    	a <<= 1;
-    	n >>= 1;
+typedef long long int ll;
+typedef pair<int, int> pii;
+const int M = 1e9+7;
+ 
+set<int> s;
+ 
+int main() { _
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++) s.insert(i);
+    auto it = s.begin();
+    it++;
+    int count = 0;
+    while (count < n) {
+        cout << *it << ' ';
+        auto it2 = it;
+        it++;
+        if (it == s.end()) it = s.begin();
+        s.erase(*it2);
+        it++;
+        if (it == s.end()) it = s.begin();
+        count++;
     }
+    cout << '\n';
+	return 0;
 }

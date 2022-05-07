@@ -1,127 +1,153 @@
 /*
 Problem Name: Police Chase
 Problem Link: https://cses.fi/problemset/task/1695
-Author: Sachin Srivastava (mrsac7)
+Author: Bernardo Archegas (codeforces/profile/Ber)
 */
-#include<bits/stdc++.h>
-using namespace std;
-template<typename... T>
-void see(T&... args) { ((cin >> args), ...);}
-template<typename... T>
-void put(T&&... args) { ((cout << args << " "), ...);}
-template<typename... T>
-void putl(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {cerr << *it << "=" << a << ", "; err(++it, args...);}
-#define int long long
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MAXN 200100
+#define INF 1e18
 #define pb push_back
 #define F first
 #define S second
-#define ll long long
-#define ull unsigned long long
-#define ld long double
-#define pii pair<int,int>
-#define tiii tuple<int,int,int>
-#define vi vector<int>
-#define vii vector<pii>
-#define vc vector
-#define L cout<<'\n';
-#define E cerr<<'\n';
-#define all(x) x.begin(),x.end()
-#define rep(i,a,b) for (int i=a; i<b; ++i)
-#define rev(i,a,b) for (int i=a; i>b; --i)
-#define IOS ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-#define setpr(x) cout<<setprecision(x)<<fixed
-#define sz size()
-#define seea(a,x,y) for(int i=x;i<y;i++){cin>>a[i];}
-#define seev(v,n) for(int i=0;i<n;i++){int x; cin>>x; v.push_back(x);}
-#define sees(s,n) for(int i=0;i<n;i++){int x; cin>>x; s.insert(x);}
-const ll inf = 1LL<<62;
-const ld ep = 0.0000001;
-const ld pi = acos(-1.0);
-const ll md = 1000000007;
-
-vc<tiii> adj[505];
-int xpow(int x, unsigned int y){
-    int res=1;
-    while(y>0){
-        if (y&1) res= (res*x); y=y>>1; x=(x*x);
-    }
-    return res;
+ 
+using namespace std;
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int M = 1e9+7;
+ 
+int n;
+int vis[505];
+vector<vector<int>> residualGraph;
+ 
+// Finds if more flow can be sent from source to sink.
+// Also assigns levels to nodes.
+bool bfs(vector<vector<int>>& residualGraph, vector<int>& level, int source, int sink)
+{
+    fill(level.begin(), level.end(), -1);
+	level[source] = 0;
+	
+	queue<int> q;
+	q.push(source);
+ 
+	while (!q.empty())
+	{
+		int u = q.front();
+		q.pop();
+		for (int v=0; v < n; v++)
+		{
+			if (u != v && residualGraph[u][v] > 0 && level[v] < 0)
+			{
+				// Level of current vertex is level of parent + 1
+				level[v] = level[u] + 1;
+				q.push(v);
+			}
+		}
+	}
+	// IF we can not reach to the sink we
+	// return false else true
+	return level[sink] < 0 ? false : true ;
 }
-int d,n;
-bool vis[505];
-int dfs(int s, int f){
-    if (s==n) return f;
-    vis[s]=1;
-    for (auto &[i,w,j]: adj[s]) {
-        if (w>=d && !vis[i]){
-            int b = dfs(i,min(f,w));
-            if (b>0){
-                w-=b;
-                get<1>(adj[i][j])+=b;
-                return b;
-            }
-        }
-    }
-    return 0;
+ 
+// A DFS based function to send flow after BFS has figured out that there is a possible flow and
+// constructed levels. This function called multiple times for a single call of BFS.
+// flow : Current flow send by parent function call
+// count[] : count of edges explored from i.
+// u : Current vertex
+int sendFlow(vector<vector<int>>& residualGraph, vector<int>& level, vector<int>& count, int u, int sink, int flow)
+{
+	// Sink reached
+	if (u == sink)
+		return flow;
+ 
+    if (count[u] == (int)residualGraph[u].size())
+	    return 0;
+ 
+	// Traverse all adjacent edges one-by-one.
+	for (int v=0; v < n; v++)
+	{
+		if (residualGraph[u][v] > 0)
+		{
+		    count[u]++;
+			if (level[v] == level[u]+1)
+			{
+                // find minimum flow from u to sink
+			 	int curr_flow = min(flow, residualGraph[u][v]);
+ 
+			    int min_cap = sendFlow(residualGraph, level, count, v, sink, curr_flow);
+			    if (min_cap > 0)
+			    {
+                    residualGraph[u][v] -= min_cap;
+                    residualGraph[v][u] += min_cap;
+				    return min_cap;
+			    }
+			}
+		}
+	}
+	return 0;
 }
-void dfs2(int s){
-    if (vis[s]) return;
-    vis[s]=1;
-    for (auto [i,w,j]: adj[s]) {
-        if (w>0) dfs2(i);
-    }
+ 
+int dinic_algorithm(vector<vector<int>>& graph, int source, int sink)
+{
+	if (source == sink)
+		return -1;
+ 
+	int max_flow = 0;
+    residualGraph = graph;
+    vector<int> level(n, -1);
+ 
+	// Augment the flow while there is path from source to sink
+	while (bfs(residualGraph, level, source, sink) == true)
+	{
+		// store how many neighbors are visited
+		vector<int> count(n, 0);
+ 
+		// while flow is not zero in graph from source to sink
+		while (int flow = sendFlow(residualGraph, level, count, source, sink, INT_MAX))
+			max_flow += flow;
+	}
+	return max_flow;
 }
-void solve(){
-    int m; see(n,m);
-    int mx = 1;
-    rep(i,0,m){
-        int x,y; see(x,y);
-        int j1 = adj[x].sz;
-        int j2 = adj[y].sz;
-        adj[x].pb({y,1,j2}); //residual edge of x->y lies at index j2 in adj[y]
-        adj[y].pb({x,1,j1});
-    }
-    d = xpow(2, (int) log2(mx));
-    int ans=0;
-    while(d>0){
-        while(1){
-            memset(vis,0,sizeof vis);
-            int f = dfs(1,inf);
-            ans+=f;
-            if (f==0) break;
-        }
-        d>>=1;
-    }
-    putl(ans);
-    memset(vis,0,sizeof vis);
-    dfs2(1);
-    vis[n]=0;
-    rep(i,1,n+1){
-        if (vis[i]){
-            for (auto [ii,ww,jj]: adj[i]){
-                if (!vis[ii]) putl(i,ii);
-            }
-        }
-    }
-} 
-signed main(){
-    IOS;
-    #ifdef LOCAL
-    freopen("input.txt", "r" , stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-    int t=1;
-    //cin>>t;
-    while(t--){
-        solve();
-        //cout<<'\n';
-    }
-    #ifdef LOCAL
-    clock_t tStart = clock();
-    cerr<<fixed<<setprecision(10)<<"\nTime Taken: "<<(double)(clock()- tStart)/CLOCKS_PER_SEC<<endl;
-    #endif
+ 
+void addEdge(vector<vector<int>>& graph,
+             int u, int v, int w)
+{
+    graph[u][v] = w;
+	graph[v][u] = w;
+}
+ 
+int main() {
+	int m;
+	cin >> n >> m;
+    vector<vector<int>> graph(n, vector<int> (n, 0));
+	vector<pii> edg;
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		a--, b--;
+		addEdge(graph, a, b, 1);
+		edg.pb({a, b});
+	}
+	cout << dinic_algorithm(graph, 0, n-1) << '\n';
+	memset(vis, -1, sizeof(vis));
+	vis[0] = 1;
+	queue<int> fila;
+	fila.push(0);
+	while (!fila.empty()) {
+		int atual = fila.front();
+		fila.pop();
+		for (int i = 1; i < n; i++) {
+			if (vis[i] == -1 && residualGraph[atual][i] > 0) {
+				vis[i] = 1;
+				fila.push(i);
+			}
+		}
+	}
+	for (pii x : edg) {
+		if (vis[x.F] == 1 &&  vis[x.S] == -1) cout << x.F+1 << ' ' << x.S+1 << '\n';
+		else if (vis[x.S] == 1 && vis[x.F] == -1) cout << x.S+1 << ' ' << x.F+1 << '\n';
+	}
+	return 0;
 }
