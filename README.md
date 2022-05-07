@@ -250,13 +250,13 @@
 1. [2086 - Subarray Squares](src/2086%20-%20Subarray%20Squares.cpp)
 1. [2087 - Houses and Schools](src/2087%20-%20Houses%20and%20Schools.cpp)
 1. [2088 - Knuth Division](src/2088%20-%20Knuth%20Division.cpp)
-1. 2111 - Apples and Bananas
-1. 2112 - One Bit Positions
-1. 2113 - Signal Processing
+1. [2111 - Apples and Bananas](src/2111%20-%20Apples%20and%20Bananas.cpp)
+1. [2112 - One Bit Positions](src/2112%20-%20One%20Bit%20Positions.cpp)
+1. [2113 - Signal Processing](src/2113%20-%20Signal%20Processing.cpp)
 1. [2101 - New Roads Queries](src/2101%20-%20New%20Roads%20Queries.cpp)
 1. 2133 - Dynamic Connectivity
 1. 2121 - Parcel Delivery
-1. 2129 - Task Assignment
+1. 2129 - Task Assignment(src/2129%20-%20Task%20Assignment.cpp)
 1. 2130 - Distinct Routes II
 
 ## Additional Problems
