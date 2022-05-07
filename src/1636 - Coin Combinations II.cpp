@@ -1,7 +1,7 @@
 /*
 Problem Name: Coin Combinations II
 Problem Link: https://cses.fi/problemset/task/1636
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);

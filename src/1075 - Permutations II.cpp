@@ -1,7 +1,7 @@
 /*
 Problem Name: Permutations II
 Problem Link: https://cses.fi/problemset/task/1075
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  
@@ -15,7 +15,7 @@ mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
 const int MOD = 1e9 + 7;
 const int MAXN = 4e5 + 5;
 const ll INF = 2e18;
- 
+
 int dp[1005][1005][2];
  
 void add(int &a, int b) {

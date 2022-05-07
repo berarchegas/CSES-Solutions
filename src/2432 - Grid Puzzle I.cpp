@@ -1,7 +1,7 @@
 /*
 Problem Name: Grid Puzzle I
 Problem Link: https://cses.fi/problemset/task/2432
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  

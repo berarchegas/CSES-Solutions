@@ -1,7 +1,7 @@
 /*
 Problem Name: Necessary Cities
 Problem Link: https://cses.fi/problemset/task/2077
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  

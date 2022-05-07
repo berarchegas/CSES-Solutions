@@ -1,7 +1,7 @@
 /*
 Problem Name: Distinct Numbers
 Problem Link: https://cses.fi/problemset/task/1621
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  

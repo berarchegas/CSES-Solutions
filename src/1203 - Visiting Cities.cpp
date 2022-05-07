@@ -1,7 +1,7 @@
 /*
 Problem Name: Visiting Cities
 Problem Link: https://cses.fi/problemset/task/1203
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  

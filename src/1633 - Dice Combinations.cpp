@@ -1,7 +1,7 @@
 /*
 Problem Name: Dice Combinations
 Problem Link: https://cses.fi/problemset/task/1633
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  

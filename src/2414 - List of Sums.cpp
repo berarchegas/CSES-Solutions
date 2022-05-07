@@ -1,7 +1,7 @@
 /*
 Problem Name: List of Sums
 Problem Link: https://cses.fi/problemset/task/2414
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  

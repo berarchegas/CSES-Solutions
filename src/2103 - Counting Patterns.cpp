@@ -1,7 +1,7 @@
 /*
 Problem Name: Counting Patterns
 Problem Link: https://cses.fi/problemset/task/2103
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <iostream>
 #include <algorithm>

@@ -1,7 +1,7 @@
 /*
 Problem Name: Beautiful Subgrids
 Problem Link: https://cses.fi/problemset/task/2137
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #pragma GCC target("popcnt")
 #include <iostream>

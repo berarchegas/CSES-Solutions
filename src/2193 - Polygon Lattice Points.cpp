@@ -1,7 +1,7 @@
 /*
 Problem Name: Polygon Lattice Points
 Problem Link: https://cses.fi/problemset/task/2193
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);

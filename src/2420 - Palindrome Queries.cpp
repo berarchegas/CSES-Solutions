@@ -1,7 +1,7 @@
 /*
 Problem Name: Palindrome Queries
 Problem Link: https://cses.fi/problemset/task/2420
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  

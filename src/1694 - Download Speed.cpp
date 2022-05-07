@@ -1,7 +1,7 @@
 /*
 Problem Name: Download Speed
 Problem Link: https://cses.fi/problemset/task/1694
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include<bits/stdc++.h>
 using namespace std;

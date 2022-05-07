@@ -1,7 +1,7 @@
 /*
 Problem Name: Flight Route Requests
 Problem Link: https://cses.fi/problemset/task/1699
-Author: Bernardo Archegas (codeforces/profile/Ber)
+Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
  
