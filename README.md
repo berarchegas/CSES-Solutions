@@ -286,35 +286,35 @@
 1. [1748 - Increasing Subsequence II](src/1748%20-%20Increasing%20Subsequence%20II.cpp)
 1. [1149 - String Removals](src/1149%20-%20String%20Removals.cpp)
 1. [1188 - Bit Inversions](src/1188%20-%20Bit%20Inversions.cpp)
-1. 2419 - [Xor Pyramid]
+1. [2419 - Xor Pyramid](src/2419%20-%20Xor%20Pyramid.cpp)
 1. [1086 - Writing Numbers](src/1086%20-%20Writing%20Numbers.cpp)
 1. [1113 - String Transform](src/1113%20-%20String%20Transform.cpp)
 1. 2427 - Letter Pair Move Game
 1. [1147 - Maximum Building I](src/1147%20-%20Maximum%20Building%20I.cpp)
 1. [1162 - Sorting Methods](src/1162%20-%20Sorting%20Methods.cpp)
-1. 1191 - [Cyclic Array]
-1. 2414 - [List of Sums]
-1. 2132 - [Increasing Array II]
-1. 1189 - [Food Division]
+1. [1191 - Cyclic Array](src/1191%20-%20Cyclic%20Array.cpp)
+1. [2414 - List of Sums](src/2414%20-%20List%20of%20Sums.cpp)
+1. [2132 - Increasing Array II](src/2132%20-%20Increasing%20Array%20II.cpp)
+1. [1189 - Food Division](src/1189%20-%20Food%20Division.cpp)
 1. [1654 - Bit Problem](src/1654%20-%20Bit%20Problem.cpp)
-1. 1698 - [Swap Round Sorting]
+1. [1698 - Swap Round Sorting](src/1698%20-%20Swap%20Round%20Sorting.cpp)
 1. 2430 - Binary Subsequences
 1. [1700 - Tree Isomorphism I](src/1700%20-%20Tree%20Isomorphism%20I.cpp)
-1. 2228 - [Counting Sequences]
+1. [2228 - Counting Sequences](src/2228%20-%20Counting%20Sequences.cpp)
 1. 1703 - Critical Cities
 1. [1706 - School Excursion](src/1706%20-%20School%20Excursion.cpp)
 1. [1709 - Coin Grid](src/1709%20-%20Coin%20Grid.cpp)
 1. 1742 - Robot Path
-1. 2426 - [Programmers and Artists]
-1. 1757 - [Course Schedule II]
+1. [2426 - Programmers and Artists](src/2426%20-%20Programmers%20and%20Artists.cpp)
+1. [1757 - Course Schedule II](src/1757%20-%20Course%20Schedule%20II.cpp)
 1. 2174 - Removing Digits II
-1. 2180 - [Coin Arrangement]
-1. 2176 - [Counting Bishops]
-1. 2432 - [Grid Puzzle I]
+1. [2180 - Coin Arrangement](src/2180%20-%20Coin%20Arrangement.cpp)
+1. [2176 - Counting Bishops](src/2176%20-%20Counting%20Bishops.cpp)
+1. [2432 - Grid Puzzle I](src/2432%20-%20Grid%20Puzzle%20I.cpp)
 1. 2131 - Grid Puzzle II
-1. 1080 - [Empty String]
+1. [1080 - Empty String](src/1080%20-%20Empty%20String.cpp)
 1. [1078 - Grid Paths](src/1078%20-%20Grid%20Paths.cpp)
-1. 2115 - [Bit Substrings]
+1. [2115 - Bit Substrings](src/2115%20-%20Bit%20Substrings.cpp)
 1. 2075 - Reversal Sorting
 1. 2421 - Counting Reorders
 1. [1159 - Book Shop II](src/1159%20-%20Book%20Shop%20II.cpp)
@@ -325,8 +325,8 @@
 1. 1148 - Maximum Building II
 1. 2423 - Filling Trominos
 1. [1161 - Stick Divisions](src/1161%20-%20Stick%20Divisions.cpp)
-1. 1665 - [Coding Company]
-1. 1699 - [Flight Route Requests]
+1. [1665 - Coding Company]
+1. [1699 - Flight Route Requests]
 1. 2402 - Two Stacks Sorting
 1. [1701 - Tree Isomorphism II](src/1701%20-%20Tree%20Isomorphism%20II.cpp)
 1. 1705 - Forbidden Cities
