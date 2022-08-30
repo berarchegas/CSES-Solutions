@@ -1,6 +1,6 @@
 /*
-Problem Name: Substring Reversals
-Problem Link: https://cses.fi/problemset/task/2073
+Problem Name: Reversal Sorting
+Problem Link: https://cses.fi/problemset/task/2075
 Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
 */
 #include <bits/stdc++.h>
@@ -13,22 +13,26 @@ using pll = pair<ll, ll>;
 mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
     
 const int MOD = 1e9 + 7;
-const int MAXN = 2e6 + 5;
+const int MAXN = 2e5 + 5;
 const ll INF = 2e18;
  
 struct node {
     node *L, *R;
-    int prio, sz;
-    char c;
+    int prio, sz, val, mn;
     bool rev;
-    node (char _c) {
-        L = 0, R = 0, prio = rng(), sz = 1, c = _c, rev = false;
+    node (int _val = MAXN) {
+        L = 0, R = 0, prio = rng(), sz = 1, val = mn = _val, rev = false;
     }
 };
  
 int size(node *treap) {
     if (!treap) return 0;
     return treap->sz;
+}
+ 
+int mini(node *treap) {
+    if (!treap) return MAXN;
+    return treap->mn;
 }
  
 void push(node *treap) {
@@ -43,6 +47,7 @@ void push(node *treap) {
 void recalc(node *&treap) {
     if (!treap) return;
     treap->sz = size(treap->L) + size(treap->R) + 1;
+    treap->mn = min({treap->val, mini(treap->L), mini(treap->R)});
 }
  
 void split(node *treap, node *&L, node *&R, int k) {
@@ -80,34 +85,36 @@ void merge(node *&treap, node *L, node *R) {
     }
 }
  
-void print(node *treap) {
-    if (!treap) return;
+int query(node *treap) {
     push(treap);
-    print(treap->L);
-    cout << treap->c;
-    print(treap->R);
+    int a = mini(treap->L), b = treap->val, c = mini(treap->R), d = min({a, b, c});
+    if (a == d) return query(treap->L);
+    else if (b == d) return size(treap->L) + 1;
+    else return size(treap->L) + 1 + query(treap->R);
 }
  
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, m, l, r;
-    string s;
-    cin >> n >> m >> s;
+    int n, x;
+    cin >> n;
     node *root = 0;
-    for (int i = 0; i < n; i++) {
-        merge(root, root, new node(s[i]));
+    for (int i = 1; i <= n; i++) {
+        cin >> x;
+        merge(root, root, new node(x));
     }
-    for (int i = 0; i < m; i++) {
-        cin >> l >> r;
+    cout << n << endl;
+    for (int i = 1; i <= n; i++) {
+        //put i in its place
+        
         node *a, *b, *c;
-        split(root, a, b, l - 1);
-        split(b, b, c, r - l + 1);
+        split(root, a, b, i - 1);
+        int pos = query(b);
+        split(b, b, c, pos);
         b->rev ^= true;
+        merge(b, b, c);
         merge(root, a, b);
-        merge(root, root, c);
+        cout << i << ' ' << pos + i - 1 << endl;
     }
-    print(root);
-    cout << '\n';
     return 0;
 }
