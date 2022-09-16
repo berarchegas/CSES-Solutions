@@ -246,7 +246,7 @@
 1. [2077 - Necessary Cities](src/2077%20-%20Necessary%20Cities.cpp)
 1. [2078 - Eulerian Subgraphs](src/2078%20-%20Eulerian%20Subgraphs.cpp)
 1. [2084 - Monster Game I](src/2084%20-%20Monster%20Game%20I.cpp)
-1. 2085 - Monster Game II
+1. [2085 - Monster Game II](src/2085%20-Monster%20Game%20II.cpp)
 1. [2086 - Subarray Squares](src/2086%20-%20Subarray%20Squares.cpp)
 1. [2087 - Houses and Schools](src/2087%20-%20Houses%20and%20Schools.cpp)
 1. [2088 - Knuth Division](src/2088%20-%20Knuth%20Division.cpp)
@@ -254,10 +254,10 @@
 1. [2112 - One Bit Positions](src/2112%20-%20One%20Bit%20Positions.cpp)
 1. [2113 - Signal Processing](src/2113%20-%20Signal%20Processing.cpp)
 1. [2101 - New Roads Queries](src/2101%20-%20New%20Roads%20Queries.cpp)
-1. 2133 - Dynamic Connectivity
-1. 2121 - Parcel Delivery
+1. [2133 - Dynamic Connectivity](src/2133%20-%20Dynamic%20Connectivity.cpp)
+1. [2121 - Parcel Delivery](src/2121%20-%20Parcel%20Delivery.cpp)
 1. [2129 - Task Assignment](src/2129%20-%20Task%20Assignment.cpp)
-1. 2130 - Distinct Routes II
+1. [2130 - Distinct Routes II](src/2130%20-%20Distinct%20Routes%20II.cpp)
 
 ## Additional Problems
 1. [1087 - Shortest Subsequence](src/1087%20-%20Shortest%20Subsequence.cpp)
@@ -281,7 +281,7 @@
 1. [2214 - Inverse Inversions](src/2214%20-%20Inverse%20Inversions.cpp)
 1. [2215 - Monotone Subsequences](src/2215%20-%20Monotone%20Subsequences.cpp)
 1. [1743 - String Reorder](src/1743%20-%20String%20Reorder.cpp)
-1. 2425 - Stack Weights
+1. [2425 - Stack Weights](src/2425%20-%20Stack%20Weights.cpp)
 1. [1747 - Pyramid Array](src/1747%20-%20Pyramid%20Array.cpp)
 1. [1748 - Increasing Subsequence II](src/1748%20-%20Increasing%20Subsequence%20II.cpp)
 1. [1149 - String Removals](src/1149%20-%20String%20Removals.cpp)
@@ -298,7 +298,7 @@
 1. [1189 - Food Division](src/1189%20-%20Food%20Division.cpp)
 1. [1654 - Bit Problem](src/1654%20-%20Bit%20Problem.cpp)
 1. [1698 - Swap Round Sorting](src/1698%20-%20Swap%20Round%20Sorting.cpp)
-1. 2430 - Binary Subsequences
+1. [2430 - Binary Subsequences](src/2430%20-%20Binary%20Subsequences.cpp)
 1. [1700 - Tree Isomorphism I](src/1700%20-%20Tree%20Isomorphism%20I.cpp)
 1. [2228 - Counting Sequences](src/2228%20-%20Counting%20Sequences.cpp)
 1. 1703 - Critical Cities
@@ -307,32 +307,32 @@
 1. 1742 - Robot Path
 1. [2426 - Programmers and Artists](src/2426%20-%20Programmers%20and%20Artists.cpp)
 1. [1757 - Course Schedule II](src/1757%20-%20Course%20Schedule%20II.cpp)
-1. 2174 - Removing Digits II
+1. [2174 - Removing Digits II](src/2174%20-%20Removing%20Digits%20II.cpp)
 1. [2180 - Coin Arrangement](src/2180%20-%20Coin%20Arrangement.cpp)
 1. [2176 - Counting Bishops](src/2176%20-%20Counting%20Bishops.cpp)
 1. [2432 - Grid Puzzle I](src/2432%20-%20Grid%20Puzzle%20I.cpp)
-1. 2131 - Grid Puzzle II
+1. [2131 - Grid Puzzle II](src/2131%20-%20Grid%20Puzzle%20II.cpp)
 1. [1080 - Empty String](src/1080%20-%20Empty%20String.cpp)
 1. [1078 - Grid Paths](src/1078%20-%20Grid%20Paths.cpp)
 1. [2115 - Bit Substrings](src/2115%20-%20Bit%20Substrings.cpp)
-1. 2075 - Reversal Sorting
+1. [2075 - Reversal Sorting](src/2075%20-%20Reversal%20Sorting.cpp)
 1. 2421 - Counting Reorders
 1. [1159 - Book Shop II](src/1159%20-%20Book%20Shop%20II.cpp)
 1. [1677 - Network Breakdown](src/1677%20-%20Network%20Breakdown.cpp)
 1. [1203 - Visiting Cities](src/1203%20-%20Visiting%20Cities.cpp)
-1. 2184 - Missing Coin Sum Queries
+1. [2184 - Missing Coin Sum Queries](src/2184%20-%20Missing%20Coin%20Sum%20Queries.cpp)
 1. [1157 - Number Grid](src/1157%20-%20Number%20Grid.cpp)
 1. 1148 - Maximum Building II
-1. 2423 - Filling Trominos
+1. [2423 - Filling Trominos](src/2423%20-%20Filling%20Trominos.cpp)
 1. [1161 - Stick Divisions](src/1161%20-%20Stick%20Divisions.cpp)
 1. [1665 - Coding Company](src/1665%20-%20Coding%20Company.cpp)
 1. [1699 - Flight Route Requests](src/1699%20-%20Flight%20Route%20Requests.cpp)
 1. 2402 - Two Stacks Sorting
 1. [1701 - Tree Isomorphism II](src/1701%20-%20Tree%20Isomorphism%20II.cpp)
 1. 1705 - Forbidden Cities
-1. 1741 - Area of Rectangles
+1. [1741 - Area of Rectangles](src/1741%20-%20Area%20of%20Rectangles.cpp)
 1. 2429 - Grid Completion
-1. 1752 - Creating Offices
+1. [1752 - Creating Offices](src/1752%20-%20Creating%20Offices.cpp)
 1. [1075 - Permutations II](src/1075%20-%20Permutations%20II.cpp)
 1. 2415 - Functional Graph Distribution
 1. 1685 - New Flight Routes
