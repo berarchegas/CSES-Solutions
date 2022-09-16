@@ -1,8 +1,9 @@
-/*
-Problem Name: Tower of Hanoi
-Problem Link: https://cses.fi/problemset/task/2165
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Tower of Hanoi
+//
+// Problem name: Tower of Hanoi
+// Problem Link: https://cses.fi/problemset/task/2165
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define MAXN 100100

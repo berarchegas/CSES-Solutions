@@ -1,8 +1,9 @@
-/*
-Problem Name: Download Speed
-Problem Link: https://cses.fi/problemset/task/1694
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Download Speed
+//
+// Problem name: Download Speed
+// Problem Link: https://cses.fi/problemset/task/1694
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long

@@ -1,8 +1,9 @@
-/*
-Problem Name: Grid Puzzle II
-Problem Link: https://cses.fi/problemset/task/2131
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Grid Puzzle II
+//
+// Problem name: Grid Puzzle II
+// Problem Link: https://cses.fi/problemset/task/2131
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

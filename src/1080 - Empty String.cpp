@@ -1,8 +1,9 @@
-/*
-Problem Name: Empty String
-Problem Link: https://cses.fi/problemset/task/1080
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Empty String
+//
+// Problem name: Empty String
+// Problem Link: https://cses.fi/problemset/task/1080
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

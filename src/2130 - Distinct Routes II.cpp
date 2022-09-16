@@ -1,8 +1,9 @@
-/*
-Problem Name: Distinct Routes II
-Problem Link: https://cses.fi/problemset/task/2130
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Distinct Routes II
+//
+// Problem name: Distinct Routes II
+// Problem Link: https://cses.fi/problemset/task/2130
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

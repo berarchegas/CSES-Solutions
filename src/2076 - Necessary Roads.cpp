@@ -1,8 +1,9 @@
-/*
-Problem Name: Necessary Roads
-Problem Link: https://cses.fi/problemset/task/2076
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Necessary Roads
+//
+// Problem name: Necessary Roads
+// Problem Link: https://cses.fi/problemset/task/2076
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

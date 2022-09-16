@@ -1,8 +1,9 @@
-/*
-Problem Name: Fixed-Length Paths II
-Problem Link: https://cses.fi/problemset/task/2081
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Fixed-Length Paths II
+//
+// Problem name: Fixed-Length Paths II
+// Problem Link: https://cses.fi/problemset/task/2081
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

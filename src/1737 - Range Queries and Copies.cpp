@@ -1,8 +1,9 @@
-/*
-Problem Name: Range Queries and Copies
-Problem Link: https://cses.fi/problemset/task/1737
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Range Queries and Copies
+//
+// Problem name: Range Queries and Copies
+// Problem Link: https://cses.fi/problemset/task/1737
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

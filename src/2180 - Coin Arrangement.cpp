@@ -1,8 +1,9 @@
-/*
-Problem Name: Coin Arrangement
-Problem Link: https://cses.fi/problemset/task/2180
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Coin Arrangement
+//
+// Problem name: Coin Arrangement
+// Problem Link: https://cses.fi/problemset/task/2180
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

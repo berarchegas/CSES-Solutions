@@ -1,8 +1,9 @@
-/*
-Problem Name: Stick Lengths
-Problem Link: https://cses.fi/problemset/task/1074
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Stick Lengths
+//
+// Problem name: Stick Lengths
+// Problem Link: https://cses.fi/problemset/task/1074
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

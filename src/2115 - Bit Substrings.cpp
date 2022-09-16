@@ -1,8 +1,9 @@
-/*
-Problem Name: Bit Substrings
-Problem Link: https://cses.fi/problemset/task/2115
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Bit Substrings
+//
+// Problem name: Bit Substrings
+// Problem Link: https://cses.fi/problemset/task/2115
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

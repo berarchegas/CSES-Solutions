@@ -1,8 +1,9 @@
-/*
-Problem Name: Substring Distribution
-Problem Link: https://cses.fi/problemset/task/2110
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Substring Distribution
+//
+// Problem name: Substring Distribution
+// Problem Link: https://cses.fi/problemset/task/2110
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
     
 using namespace std;

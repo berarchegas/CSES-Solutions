@@ -1,8 +1,9 @@
-/*
-Problem Name: Cyclic Array
-Problem Link: https://cses.fi/problemset/task/1191
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Cyclic Array
+//
+// Problem name: Cyclic Array
+// Problem Link: https://cses.fi/problemset/task/1191
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

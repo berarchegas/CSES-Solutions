@@ -1,8 +1,9 @@
-/*
-Problem Name: Bit Problem
-Problem Link: https://cses.fi/problemset/task/1654
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Bit Problem
+//
+// Problem name: Bit Problem
+// Problem Link: https://cses.fi/problemset/task/1654
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

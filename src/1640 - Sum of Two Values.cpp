@@ -1,8 +1,9 @@
-/*
-Problem Name: Sum of Two Values
-Problem Link: https://cses.fi/problemset/task/1640
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Sum of Two Values
+//
+// Problem name: Sum of Two Values
+// Problem Link: https://cses.fi/problemset/task/1640
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

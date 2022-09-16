@@ -1,8 +1,9 @@
-/*
-Problem Name: Binary Subsequences
-Problem Link: https://cses.fi/problemset/task/2430
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Binary Subsequences
+//
+// Problem name: Binary Subsequences
+// Problem Link: https://cses.fi/problemset/task/2430
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

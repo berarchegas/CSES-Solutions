@@ -1,8 +1,9 @@
-/*
-Problem Name: Special Substrings
-Problem Link: https://cses.fi/problemset/task/2186
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Special Substrings
+//
+// Problem name: Special Substrings
+// Problem Link: https://cses.fi/problemset/task/2186
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

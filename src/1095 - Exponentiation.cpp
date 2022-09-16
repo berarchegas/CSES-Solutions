@@ -1,8 +1,9 @@
-/*
-Problem Name: Exponentiation
-Problem Link: https://cses.fi/problemset/task/1095
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Exponentiation
+//
+// Problem name: Exponentiation
+// Problem Link: https://cses.fi/problemset/task/1095
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define MAXN 10010

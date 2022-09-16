@@ -1,8 +1,9 @@
-/*
-Problem Name: Reversal Sorting
-Problem Link: https://cses.fi/problemset/task/2075
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Reversal Sorting
+//
+// Problem name: Reversal Sorting
+// Problem Link: https://cses.fi/problemset/task/2075
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

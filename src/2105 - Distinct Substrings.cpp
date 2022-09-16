@@ -1,8 +1,9 @@
-/*
-Problem Name: Distinct Substrings
-Problem Link: https://cses.fi/problemset/task/2105
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Distinct Substrings
+//
+// Problem name: Distinct Substrings
+// Problem Link: https://cses.fi/problemset/task/2105
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

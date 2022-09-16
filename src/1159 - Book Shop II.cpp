@@ -1,8 +1,9 @@
-/*
-Problem Name: Book Shop II
-Problem Link: https://cses.fi/problemset/task/1159
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Book Shop II
+//
+// Problem name: Book Shop II
+// Problem Link: https://cses.fi/problemset/task/1159
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

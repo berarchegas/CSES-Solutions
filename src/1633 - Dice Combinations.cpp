@@ -1,8 +1,9 @@
-/*
-Problem Name: Dice Combinations
-Problem Link: https://cses.fi/problemset/task/1633
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Dice Combinations
+//
+// Problem name: Dice Combinations
+// Problem Link: https://cses.fi/problemset/task/1633
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

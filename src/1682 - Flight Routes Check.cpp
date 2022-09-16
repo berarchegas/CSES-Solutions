@@ -1,8 +1,9 @@
-/*
-Problem Name: Flight Routes Check
-Problem Link: https://cses.fi/problemset/task/1682
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Flight Routes Check
+//
+// Problem name: Flight Routes Check
+// Problem Link: https://cses.fi/problemset/task/1682
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define MAXN 100100

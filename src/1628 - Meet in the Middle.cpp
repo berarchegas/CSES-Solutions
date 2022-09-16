@@ -1,8 +1,9 @@
-/*
-Problem Name: Meet in the Middle
-Problem Link: https://cses.fi/problemset/task/1628
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Meet in the Middle
+//
+// Problem name: Meet in the Middle
+// Problem Link: https://cses.fi/problemset/task/1628
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define MAXN 1010

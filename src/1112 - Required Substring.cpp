@@ -1,8 +1,9 @@
-/*
-Problem Name: Required Substring
-Problem Link: https://cses.fi/problemset/task/1112
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Required Substring
+//
+// Problem name: Required Substring
+// Problem Link: https://cses.fi/problemset/task/1112
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

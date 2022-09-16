@@ -1,8 +1,9 @@
-/*
-Problem Name: Pattern Positions
-Problem Link: https://cses.fi/problemset/task/2104
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Pattern Positions
+//
+// Problem name: Pattern Positions
+// Problem Link: https://cses.fi/problemset/task/2104
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <iostream>
 #include <algorithm>
 #include <queue>

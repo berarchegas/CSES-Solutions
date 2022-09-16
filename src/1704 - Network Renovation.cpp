@@ -1,8 +1,9 @@
-/*
-Problem Name: Network Renovation
-Problem Link: https://cses.fi/problemset/task/1704
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Network Renovation
+//
+// Problem name: Network Renovation
+// Problem Link: https://cses.fi/problemset/task/1704
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

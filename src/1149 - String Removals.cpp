@@ -1,8 +1,9 @@
-/*
-Problem Name: String Removals
-Problem Link: https://cses.fi/problemset/task/1149
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// String Removals
+//
+// Problem name: String Removals
+// Problem Link: https://cses.fi/problemset/task/1149
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

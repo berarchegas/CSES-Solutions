@@ -1,8 +1,9 @@
-/*
-Problem Name: String Reorder
-Problem Link: https://cses.fi/problemset/task/1743
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// String Reorder
+//
+// Problem name: String Reorder
+// Problem Link: https://cses.fi/problemset/task/1743
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

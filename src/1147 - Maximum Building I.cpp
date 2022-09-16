@@ -1,8 +1,9 @@
-/*
-Problem Name: Maximum Building I
-Problem Link: https://cses.fi/problemset/task/1147
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Maximum Building I
+//
+// Problem name: Maximum Building I
+// Problem Link: https://cses.fi/problemset/task/1147
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

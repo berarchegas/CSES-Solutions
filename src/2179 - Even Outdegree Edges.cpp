@@ -1,8 +1,9 @@
-/*
-Problem Name: Even Outdegree Edges
-Problem Link: https://cses.fi/problemset/task/2179
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Even Outdegree Edges
+//
+// Problem name: Even Outdegree Edges
+// Problem Link: https://cses.fi/problemset/task/2179
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

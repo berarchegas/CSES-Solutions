@@ -1,8 +1,9 @@
-/*
-Problem Name: Substring Reversals
-Problem Link: https://cses.fi/problemset/task/2073
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Substring Reversals
+//
+// Problem name: Substring Reversals
+// Problem Link: https://cses.fi/problemset/task/2073
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

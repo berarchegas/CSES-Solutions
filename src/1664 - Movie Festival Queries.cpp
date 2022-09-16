@@ -1,8 +1,9 @@
-/*
-Problem Name: Movie Festival Queries
-Problem Link: https://cses.fi/problemset/task/1664
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Movie Festival Queries
+//
+// Problem name: Movie Festival Queries
+// Problem Link: https://cses.fi/problemset/task/1664
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

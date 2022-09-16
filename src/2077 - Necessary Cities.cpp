@@ -1,8 +1,9 @@
-/*
-Problem Name: Necessary Cities
-Problem Link: https://cses.fi/problemset/task/2077
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Necessary Cities
+//
+// Problem name: Necessary Cities
+// Problem Link: https://cses.fi/problemset/task/2077
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

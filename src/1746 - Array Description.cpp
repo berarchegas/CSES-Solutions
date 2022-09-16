@@ -1,8 +1,9 @@
-/*
-Problem Name: Array Description
-Problem Link: https://cses.fi/problemset/task/1746
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Array Description
+//
+// Problem name: Array Description
+// Problem Link: https://cses.fi/problemset/task/1746
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define MAXN 1000100

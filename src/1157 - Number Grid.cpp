@@ -1,8 +1,9 @@
-/*
-Problem Name: Number Grid
-Problem Link: https://cses.fi/problemset/task/1157
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Number Grid
+//
+// Problem name: Number Grid
+// Problem Link: https://cses.fi/problemset/task/1157
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 int main() {

@@ -1,8 +1,9 @@
-/*
-Problem Name: Tree Isomorphism II
-Problem Link: https://cses.fi/problemset/task/1701
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Tree Isomorphism II
+//
+// Problem name: Tree Isomorphism II
+// Problem Link: https://cses.fi/problemset/task/1701
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
     
 using namespace std;

@@ -1,8 +1,9 @@
-/*
-Problem Name: Programmers and Artists
-Problem Link: https://cses.fi/problemset/task/2426
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Programmers and Artists
+//
+// Problem name: Programmers and Artists
+// Problem Link: https://cses.fi/problemset/task/2426
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

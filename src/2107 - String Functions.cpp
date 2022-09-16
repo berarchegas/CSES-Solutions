@@ -1,8 +1,9 @@
-/*
-Problem Name: String Functions
-Problem Link: https://cses.fi/problemset/task/2107
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// String Functions
+//
+// Problem name: String Functions
+// Problem Link: https://cses.fi/problemset/task/2107
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

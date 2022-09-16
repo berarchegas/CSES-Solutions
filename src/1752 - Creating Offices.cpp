@@ -1,8 +1,9 @@
-/*
-Problem Name: Creating Offices
-Problem Link: https://cses.fi/problemset/task/1752
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Creating Offices
+//
+// Problem name: Creating Offices
+// Problem Link: https://cses.fi/problemset/task/1752
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

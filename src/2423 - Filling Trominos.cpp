@@ -1,8 +1,9 @@
-/*
-Problem Name: Filling Trominos
-Problem Link: https://cses.fi/problemset/task/2423
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Filling Trominos
+//
+// Problem name: Filling Trominos
+// Problem Link: https://cses.fi/problemset/task/2423
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

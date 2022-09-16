@@ -1,8 +1,9 @@
-/*
-Problem Name: Task Assignment
-Problem Link: https://cses.fi/problemset/task/2129
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Task Assignment
+//
+// Problem name: Task Assignment
+// Problem Link: https://cses.fi/problemset/task/2129
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

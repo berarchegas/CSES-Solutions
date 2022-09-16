@@ -1,8 +1,9 @@
-/*
-Problem Name: Counting Bishops
-Problem Link: https://cses.fi/problemset/task/2176
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Counting Bishops
+//
+// Problem name: Counting Bishops
+// Problem Link: https://cses.fi/problemset/task/2176
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

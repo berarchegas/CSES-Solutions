@@ -1,8 +1,9 @@
-/*
-Problem Name: Network Breakdown
-Problem Link: https://cses.fi/problemset/task/1677
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Network Breakdown
+//
+// Problem name: Network Breakdown
+// Problem Link: https://cses.fi/problemset/task/1677
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

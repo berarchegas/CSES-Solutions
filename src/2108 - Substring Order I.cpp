@@ -1,8 +1,9 @@
-/*
-Problem Name: Substring Order I
-Problem Link: https://cses.fi/problemset/task/2108
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Substring Order I
+//
+// Problem name: Substring Order I
+// Problem Link: https://cses.fi/problemset/task/2108
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
     
 using namespace std;

@@ -1,8 +1,9 @@
-/*
-Problem Name: Permutations II
-Problem Link: https://cses.fi/problemset/task/1075
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Permutations II
+//
+// Problem name: Permutations II
+// Problem Link: https://cses.fi/problemset/task/1075
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

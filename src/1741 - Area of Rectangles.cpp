@@ -1,8 +1,9 @@
-/*
-Problem Name: Area of Rectangles
-Problem Link: https://cses.fi/problemset/task/1741
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Area of Rectangles
+//
+// Problem name: Area of Rectangles
+// Problem Link: https://cses.fi/problemset/task/1741
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
     
 using namespace std;

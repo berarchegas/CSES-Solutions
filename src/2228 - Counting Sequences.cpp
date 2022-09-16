@@ -1,8 +1,9 @@
-/*
-Problem Name: Counting Sequences
-Problem Link: https://cses.fi/problemset/task/2228
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Counting Sequences
+//
+// Problem name: Counting Sequences
+// Problem Link: https://cses.fi/problemset/task/2228
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

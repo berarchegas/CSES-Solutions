@@ -1,8 +1,9 @@
-/*
-Problem Name: Pyramid Array
-Problem Link: https://cses.fi/problemset/task/1747
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Pyramid Array
+//
+// Problem name: Pyramid Array
+// Problem Link: https://cses.fi/problemset/task/1747
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

@@ -1,8 +1,9 @@
-/*
-Problem Name: String Matching
-Problem Link: https://cses.fi/problemset/task/1753
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// String Matching
+//
+// Problem name: String Matching
+// Problem Link: https://cses.fi/problemset/task/1753
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define MAXN 1000100

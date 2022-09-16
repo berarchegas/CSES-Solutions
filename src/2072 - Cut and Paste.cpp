@@ -1,8 +1,9 @@
-/*
-Problem Name: Cut and Paste
-Problem Link: https://cses.fi/problemset/task/2072
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Cut and Paste
+//
+// Problem name: Cut and Paste
+// Problem Link: https://cses.fi/problemset/task/2072
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

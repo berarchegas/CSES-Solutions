@@ -1,8 +1,9 @@
-/*
-Problem Name: Parcel Delivery
-Problem Link: https://cses.fi/problemset/task/2121
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Parcel Delivery
+//
+// Problem name: Parcel Delivery
+// Problem Link: https://cses.fi/problemset/task/2121
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

@@ -1,8 +1,9 @@
-/*
-Problem Name: Collecting Numbers
-Problem Link: https://cses.fi/problemset/task/2216
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Collecting Numbers
+//
+// Problem name: Collecting Numbers
+// Problem Link: https://cses.fi/problemset/task/2216
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define MAXN 200100

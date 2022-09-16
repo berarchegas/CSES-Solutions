@@ -1,8 +1,9 @@
-/*
-Problem Name: Labyrinth
-Problem Link: https://cses.fi/problemset/task/1193
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Labyrinth
+//
+// Problem name: Labyrinth
+// Problem Link: https://cses.fi/problemset/task/1193
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 using namespace std;
 #define MAXN 1003

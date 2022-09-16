@@ -1,8 +1,9 @@
-/*
-Problem Name: Stack Weights
-Problem Link: https://cses.fi/problemset/task/2425
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Stack Weights
+//
+// Problem name: Stack Weights
+// Problem Link: https://cses.fi/problemset/task/2425
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

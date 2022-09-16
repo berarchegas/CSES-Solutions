@@ -1,8 +1,9 @@
-/*
-Problem Name: Dynamic Connectivity
-Problem Link: https://cses.fi/problemset/task/2133
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Dynamic Connectivity
+//
+// Problem name: Dynamic Connectivity
+// Problem Link: https://cses.fi/problemset/task/2133
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
     
 using namespace std;

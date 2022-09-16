@@ -1,8 +1,9 @@
-/*
-Problem Name: Monotone Subsequences
-Problem Link: https://cses.fi/problemset/task/2215
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Monotone Subsequences
+//
+// Problem name: Monotone Subsequences
+// Problem Link: https://cses.fi/problemset/task/2215
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

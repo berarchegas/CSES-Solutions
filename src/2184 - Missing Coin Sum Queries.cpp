@@ -1,8 +1,9 @@
-/*
-Problem Name: Missing Coin Sum Queries
-Problem Link: https://cses.fi/problemset/task/2184
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Missing Coin Sum Queries
+//
+// Problem name: Missing Coin Sum Queries
+// Problem Link: https://cses.fi/problemset/task/2184
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 using namespace std; 
  

@@ -1,8 +1,9 @@
-/*
-Problem Name: Removing Digits II
-Problem Link: https://cses.fi/problemset/task/2174
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Removing Digits II
+//
+// Problem name: Removing Digits II
+// Problem Link: https://cses.fi/problemset/task/2174
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

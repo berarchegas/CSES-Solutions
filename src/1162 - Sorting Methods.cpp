@@ -1,8 +1,9 @@
-/*
-Problem Name: Sorting Methods
-Problem Link: https://cses.fi/problemset/task/1162
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Sorting Methods
+//
+// Problem name: Sorting Methods
+// Problem Link: https://cses.fi/problemset/task/1162
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

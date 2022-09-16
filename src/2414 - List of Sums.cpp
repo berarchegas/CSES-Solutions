@@ -1,8 +1,9 @@
-/*
-Problem Name: List of Sums
-Problem Link: https://cses.fi/problemset/task/2414
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// List of Sums
+//
+// Problem name: List of Sums
+// Problem Link: https://cses.fi/problemset/task/2414
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

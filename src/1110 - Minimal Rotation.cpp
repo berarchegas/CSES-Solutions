@@ -1,8 +1,9 @@
-/*
-Problem Name: Minimal Rotation
-Problem Link: https://cses.fi/problemset/task/1110
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Minimal Rotation
+//
+// Problem name: Minimal Rotation
+// Problem Link: https://cses.fi/problemset/task/1110
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

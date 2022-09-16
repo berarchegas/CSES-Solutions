@@ -1,8 +1,9 @@
-/*
-Problem Name: Palindrome Queries
-Problem Link: https://cses.fi/problemset/task/2420
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Palindrome Queries
+//
+// Problem name: Palindrome Queries
+// Problem Link: https://cses.fi/problemset/task/2420
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

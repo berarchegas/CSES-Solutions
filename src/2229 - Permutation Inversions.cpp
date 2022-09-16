@@ -1,8 +1,9 @@
-/*
-Problem Name: Permutation Inversions
-Problem Link: https://cses.fi/problemset/task/2229
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Permutation Inversions
+//
+// Problem name: Permutation Inversions
+// Problem Link: https://cses.fi/problemset/task/2229
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;

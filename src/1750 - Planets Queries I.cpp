@@ -1,8 +1,9 @@
-/*
-Problem Name: Planets Queries I
-Problem Link: https://cses.fi/problemset/task/1750
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Planets Queries I
+//
+// Problem name: Planets Queries I
+// Problem Link: https://cses.fi/problemset/task/1750
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define MAXN 1000100

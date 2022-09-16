@@ -1,8 +1,9 @@
-/*
-Problem Name: Finding Patterns
-Problem Link: https://cses.fi/problemset/task/2102
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Finding Patterns
+//
+// Problem name: Finding Patterns
+// Problem Link: https://cses.fi/problemset/task/2102
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <iostream>
 #include <algorithm>
 #include <queue>

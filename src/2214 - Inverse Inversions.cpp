@@ -1,8 +1,9 @@
-/*
-Problem Name: Inverse Inversions
-Problem Link: https://cses.fi/problemset/task/2214
-Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
-*/
+// Inverse Inversions
+//
+// Problem name: Inverse Inversions
+// Problem Link: https://cses.fi/problemset/task/2214
+// Author: Bernardo Archegas (https://codeforces.com/profile/Ber)
+
 #include <bits/stdc++.h>
  
 using namespace std;
